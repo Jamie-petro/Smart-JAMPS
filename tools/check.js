@@ -22,7 +22,7 @@ const GL_CATEGORY = ["curation", "programming", "community", "accessibility", "s
 
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (["node_modules", ".git", ".venv", "cache"].includes(e.name)) continue;
+    if (["node_modules", ".git", ".venv", "cache", "dist"].includes(e.name)) continue;
     const p = path.join(dir, e.name);
     e.isDirectory() ? walk(p, out) : out.push(p);
   }
@@ -52,7 +52,7 @@ function oneOf(file, where, value, allowed) {
 }
 
 // ---------- Layer 1: spaces.geojson ----------
-const SPACES = "site/layers/map/data/spaces.geojson";
+const SPACES = "site/public/layers/map/data/spaces.geojson";
 const gj = readJSON(SPACES);
 if (gj) {
   if (gj.type !== "FeatureCollection" || !Array.isArray(gj.features)) err(SPACES, "must be a FeatureCollection");
@@ -75,7 +75,7 @@ if (gj) {
 }
 
 // ---------- Layer 2 data ----------
-const D = "site/layers/proposal/data/";
+const D = "site/public/layers/proposal/data/";
 const sources = readJSON(D + "sources.json") || [];
 const rules = readJSON(D + "rules.json") || [];
 const grants = readJSON(D + "grants.json") || [];
@@ -150,18 +150,18 @@ if (template) {
 
 // ---------- JS syntax, banned stack ----------
 const files = walk(ROOT).filter((p) => !rel(p).startsWith(".git"));
-files.filter((p) => p.endsWith(".js") && rel(p).startsWith("site/")).forEach((p) => {
+files.filter((p) => p.endsWith(".js") && /^site\/(api|public)\//.test(rel(p))).forEach((p) => {
   try {
     execFileSync(process.execPath, ["--check", p], { stdio: "pipe" });
   } catch (e) {
     err(rel(p), "syntax error\n" + String(e.stderr).split("\n").slice(0, 5).join("\n"));
   }
 });
-if (fs.existsSync(path.join(ROOT, "site/package.json"))) err("site/package.json", "no npm in site/ (AGENTS.md)");
-files.filter((p) => /\.(html|js)$/.test(p) && rel(p).startsWith("site/") && !rel(p).startsWith("site/api/")).forEach((p) => {
+// Browser code (site/src, site/public) must never call keyed APIs directly — go through /api/*.
+files.filter((p) => /\.(html|js|ts|tsx)$/.test(p) && /^site\/(src|public)\//.test(rel(p)) || rel(p) === "site/index.html").forEach((p) => {
   const t = fs.readFileSync(p, "utf8");
-  if (/\bfrom\s+["']react|\bimport\s+React|api\.anthropic\.com|api\.openai\.com|generativelanguage\.googleapis/.test(t))
-    err(rel(p), "browser code must not import frameworks or call keyed APIs — use App.api(...)");
+  if (/api\.anthropic\.com|api\.openai\.com|generativelanguage\.googleapis/.test(t))
+    err(rel(p), "browser code must not call keyed APIs — use api(...) from src/layers/bus.ts");
 });
 
 // ---------- Keys and honesty ----------
@@ -173,7 +173,7 @@ let tracked = null;
 try {
   tracked = new Set(execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).split("\n"));
 } catch {}
-files.filter((p) => /\.(js|json|geojson|html|md|txt|css)$/.test(p) || path.basename(p) === ".env").forEach((p) => {
+files.filter((p) => /\.(js|ts|tsx|json|geojson|html|md|txt|css)$/.test(p) || path.basename(p) === ".env").forEach((p) => {
   const r = rel(p);
   if (path.basename(p) === ".env") return tracked && !tracked.has(r) ? null : err(r, ".env is committed — remove it (git rm --cached .env) and rotate the keys");
   const t = fs.readFileSync(p, "utf8");
@@ -183,7 +183,7 @@ files.filter((p) => /\.(js|json|geojson|html|md|txt|css)$/.test(p) || path.basen
 
 // ---------- SAMPLE leftovers (warning only) ----------
 const sampleCount = files
-  .filter((p) => rel(p).startsWith("site/layers/") && /\.(json|geojson)$/.test(p))
+  .filter((p) => rel(p).startsWith("site/public/layers/") && /\.(json|geojson)$/.test(p))
   .map((p) => [rel(p), (fs.readFileSync(p, "utf8").match(/SAMPLE/g) || []).length])
   .filter(([, n]) => n);
 sampleCount.forEach(([f, n]) => warn(f, `${n} SAMPLE placeholder(s) left`));

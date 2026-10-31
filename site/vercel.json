@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "functions": {
     "api/render.js": { "maxDuration": 60 },
     "api/proposal.js": { "maxDuration": 30 }

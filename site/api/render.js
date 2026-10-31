@@ -43,7 +43,7 @@ async function gemini(prompt, size) {
   return { images, model };
 }
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const { prompt, size = "1536x1024" } = req.body || {};
   if (!prompt) return res.status(400).json({ error: "prompt required" });

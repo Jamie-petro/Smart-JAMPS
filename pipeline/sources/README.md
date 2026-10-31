@@ -1,6 +1,6 @@
 # P2 — Layer 2 data: official sources, permission rules, curation guidelines
 
-Give this file to your agent as the task, together with `SCHEMA.md`. You edit only `site/layers/proposal/data/{sources,rules,grants,guidelines}.json` and `pipeline/sources/`. Grants have their own brief: `pipeline/sources/grants/README.md`.
+Give this file to your agent as the task, together with `SCHEMA.md`. You edit only `site/public/layers/proposal/data/{sources,rules,grants,guidelines}.json` and `pipeline/sources/`. Grants have their own brief: `pipeline/sources/grants/README.md`.
 
 **Goal:** a register of official sources and a rules list that tells the user WHOM to approach, WHEN and WHY for each kind of site — plus curation guidelines per site type.
 

@@ -1,25 +1,20 @@
 # Contracts between layers
 
-Layers never call each other's functions. They talk only through `App` (in `site/core/app.js`) using the objects and events below. Do not rename fields; add optional fields if needed.
+Layers never call each other's functions. They talk only through `site/src/layers/bus.ts` using the objects and events below. Do not rename fields; add optional fields if needed.
 
 ## Flow
 ```
 Layer 1 Map ──space:selected──▶ Layer 2 Proposal ──proposal:ready──▶ Layer 3 Render ──render:ready──▶ (shell shows result)
 ```
 
-## App API (provided by the shell, owned by P5)
-```js
-App.registerLayer({ id, title, mount(el, App) })  // call once at load
-App.emit(event, payload)                           // sets App.state[...] and notifies listeners
-App.on(event, fn)                                  // fn(payload)
-App.state                                          // { space, proposal, render }
-App.goTo(layerId)                                  // switch panel tab: "map" | "proposal" | "render"
-App.demo(name)                                     // Promise<json|null>: first site/layers/{map,proposal,render}/data/<name> that exists
-App.api(path, body)                                // POST to /api/<path>; resolves null if no backend (static host) or error
-App.status(text)                                   // short status line in the header
-App.esc(text)                                      // HTML-escape; use for every value you put in innerHTML
-App.badge(status)                                  // <span class="badge …"> for verified / assumption / gap / met / not_met / unknown
+## Bus API (`site/src/layers/bus.ts`, owned by P5)
+```ts
+emit(event, payload)          // sets state[...] and notifies listeners
+on(event, fn) → unsubscribe   // fn(payload)
+useBus()                      // React hook → { space, proposal, render }, re-renders on every event
+api(path, body)               // POST /api/<path>; resolves null if no backend or error
 ```
+Layer 1 → bus: `LayerDock.tsx` listens to the twin's `window` event `artsToPlaces:stateChange` and emits `space:selected` with `toSpace(site, proposalParameters)` (`space.ts`). To drive the twin from code, dispatch `artsToPlaces:externalCommand` with `{ action: "SELECT_SITE", siteId }`.
 Events: `space:selected` (Space), `proposal:ready` (Proposal), `render:ready` (Render).
 Selecting a new space clears `proposal` and `render`.
 
@@ -85,4 +80,4 @@ Same shape as the earlier `proposal.json` (see SCHEMA.md) plus:
 | `POST /api/proposal` | P3 | `{ space, draft }` | `{ title, summary, guidelines[], visual_brief, model }` |
 | `POST /api/render` | P4 | `{ prompt, size }` | `{ images: [{src, alt}], model }` |
 
-Keys only in Vercel env vars. Every layer must still work with demo data when `App.api` returns `null` (e.g. on Netlify Drop or offline).
+Keys only in Vercel env vars. Every layer must still work with demo data when `api(...)` returns `null` (local dev, static host or offline).

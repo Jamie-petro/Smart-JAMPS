@@ -1,0 +1,6 @@
+{
+  "name": "Monolith Arts to Places SG · Placemaking Digital Twin",
+  "description": "Interactive 3D digital twin and statutory compliance map for public arts and placemaking across Singapore's North-South and Rail Corridors.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,14 +1,15 @@
-# P1 — Layer 1 Map: candidate spaces
+# P1 — Layer 1: the 3D digital twin
 
-Give this file to your agent as the task. You edit only `site/layers/map/` and `pipeline/spaces/`.
+Give this file to your agent as the task. You edit `site/src/App.tsx`, `main.tsx`, `index.css`, `site/index.html`, `site/src/layers/space.ts`, `site/public/layers/map/` and `pipeline/spaces/`.
 
-**Goal:** a map of 8–15 real Singapore spaces that could host an arts event, each one a `Space` (CONTRACTS.md). Selecting one sends it to Layer 2 via `App.emit("space:selected", space)` — already wired in `map.js`.
+**Goal:** the twin is the app's shell. Keep its structure; make its content honest and keep it talking to Layers 2–3.
 
-**Steps (time-boxed)**
-1. (by 12:30) Pick spaces across different `kind`s and `land_owner`s (void deck/HDB, plaza, park, vacant state land, streetscape, heritage building). Different land owners make Layer 2's workplan visibly different — that is the demo.
-2. (by 13:00) Replace the SAMPLE features in `site/layers/map/data/spaces.geojson`. Coordinates are `[lon, lat]`. Get them from OneMap search (the search box in the app uses the same API). Keep every field in the Space schema; `photo_url` may be `null`.
-3. `status`: `verified` only if you confirmed the site and its land owner from an official source (OneMap / URA Master Plan / SLA / NParks) — put it in `source`. Otherwise `assumption`. Unknown land owner → `land_owner: "unknown"`, `status: "gap"`.
-4. (13:10–13:40, optional) Improve `map.js`: legend by `kind`, filter by kind/land owner, marker clustering is NOT needed. Keep the OSM fallback.
+**Keep working**
+- `App.tsx` must keep broadcasting `artsToPlaces:stateChange` with `site.id`, `site.name`, `site.code`, `site.wgs84`, and `proposalParameters.crowdSize` — the dock turns that into a `Space` for Layer 2 (CONTRACTS.md).
+- `space.ts` maps each site id to `kind` / `land_owner` / `area_m2`. If you add a site, add it there too; check the land owner on OneMap / SLA and say where you checked.
 
-Notes and raw research go in `pipeline/spaces/` (not deployed).
-Check: `node tools/check.js` catches wrong enums and swapped lat/lon.
+**Content to verify (judging: honesty)** — `SITES_DATA` marks items `VERIFIED RULE` without a link someone opened today:
+1. Lot numbers (e.g. `LOT MK03-02100W`) — real cadastral lots? If not confirmed, label them illustrative.
+2. Rules quoted as fact: 3.0m LTA soffit buffer, ≤0.5m / <1.5m BCA exemption, 22:00 SPF cut-off, 75/65 dBA, T-12…T-3 week timings.
+3. Grant caps and the "readiness %" numbers.
+For each: link the official page and keep `VERIFIED RULE`, or change it to `ASSUMPTION` / `CRITICAL GAP`.

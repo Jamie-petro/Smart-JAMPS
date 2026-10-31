@@ -1,6 +1,6 @@
 # P2 — Funding shortlist (grants)
 
-Give this file to your agent as the task, together with `SCHEMA.md`. Edits `site/layers/proposal/data/grants.json`; add each grant's page to `sources.json`.
+Give this file to your agent as the task, together with `SCHEMA.md`. Edits `site/public/layers/proposal/data/grants.json`; add each grant's page to `sources.json`.
 
 **Goal:** 3–6 real grants relevant to the case, each with eligibility criteria the engine can check, overlap restrictions, and genuine improvements.
 

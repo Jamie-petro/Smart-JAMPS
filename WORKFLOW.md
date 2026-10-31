@@ -5,11 +5,11 @@ Five people, one repo, each with an AI coding agent. This works because each per
 ## Roles
 | Person | Layer | You edit | Give your agent |
 |---|---|---|---|
-| P1 | 1 Map | `site/layers/map/`, `pipeline/spaces/` | `pipeline/spaces/README.md` |
-| P2 | 2 data | `site/layers/proposal/data/` (not `template.json`), `pipeline/sources/` | `pipeline/sources/README.md`, then `pipeline/sources/grants/README.md` |
-| P3 | 2 logic | `site/layers/proposal/*.js`, `*.css`, `data/template.json`, `site/api/proposal.js`, `pipeline/case/` | `pipeline/case/README.md` |
-| P4 | 3 Render | `site/layers/render/`, `site/api/render.js`, `pipeline/render/` | `pipeline/render/README.md` |
-| P5 | Shell | `site/index.html`, `site/core/`, `docs/`, `tools/`, `.github/`, root `*.md` | `docs/README.md` · merges PRs |
+| P1 (mugheeskiyani115-oss) | 1 Map — 3D digital twin | `site/src/App.tsx`, `main.tsx`, `index.css`, `site/index.html`, `site/src/layers/space.ts`, `site/public/layers/map/`, `pipeline/spaces/` | `pipeline/spaces/README.md` |
+| P2 | 2 data | `site/public/layers/proposal/data/` (not `template.json`), `pipeline/sources/` | `pipeline/sources/README.md`, then `pipeline/sources/grants/README.md` |
+| P3 | 2 logic | `site/src/layers/proposal/`, `site/public/layers/proposal/engine.js`, `data/template.json`, `site/api/proposal.js`, `pipeline/case/` | `pipeline/case/README.md` |
+| P4 (RestfulCube) | 3 Render | `site/src/layers/render/`, `site/api/render.js`, `pipeline/render/` | `pipeline/render/README.md` |
+| P5 | Shell | `site/src/layers/{bus.ts,ui.tsx,LayerDock.tsx}`, `site/package*.json`, `site/vite.config.ts`, `site/vercel.json`, `docs/`, `tools/`, `.github/`, root `*.md` | `docs/README.md` · merges PRs |
 
 ## 1. Set up (once, ~5 min)
 ```bash
@@ -23,11 +23,17 @@ git checkout -b p1/spaces
 ```
 (Use your own number and topic: `p2/rules`, `p3/engine`, `p4/render` …)
 
-Run the app locally and open http://localhost:8000:
+Run the app locally (Node 20+) and open http://localhost:3000:
 ```bash
-python3 -m http.server 8000 -d site
+cd site
 ```
-You should see the map, be able to pick a SAMPLE space, see a proposal, and get a labelled placeholder image. That's the baseline — keep it working.
+```bash
+npm install
+```
+```bash
+npm run dev
+```
+You should see the 3D twin; the amber **Open Layer 2 · Proposal & Layer 3 · Render** button opens the dock with the proposal for the selected site, and Render gives a labelled image. That's the baseline — keep it working.
 
 ## 2. Start your agent
 Open the agent **in the repo root** (not inside `site/`).
@@ -49,7 +55,7 @@ First prompt (change P1 and the brief path to yours):
    node tools/check.js
    ```
    If it fails, paste the output to your agent: "fix these errors".
-4. **Look at it:** reload http://localhost:8000, click Map → Proposal → Render, open the browser console (F12) — no red errors.
+4. **Look at it:** reload http://localhost:3000, pick a site in the twin, open the dock, click Proposal → Render, open the browser console (F12) — no red errors.
 5. **Commit and push:**
    ```bash
    git add -A && git commit -m "P1: add 10 real spaces"
@@ -78,10 +84,10 @@ First prompt (change P1 and the brief path to yours):
 | Problem | Do this |
 |---|---|
 | Agent edited another person's file | `git checkout -- <path>` (or `git restore <path>`), then re-prompt: "only edit <your folder>" |
-| You need something from another layer | Use the data in the event payload (`App.on("space:selected", s => …)`). If a field is missing, ask its owner to add an optional field — don't add it yourself |
+| You need something from another layer | Use the data in the event payload (`on("space:selected", s => …)` / `useBus()` from `site/src/layers/bus.ts`). If a field is missing, ask its owner to add an optional field — don't add it yourself |
 | `git pull --rebase` conflict | You probably edited a file you don't own. `git rebase --abort`, then ask P5 |
 | Page is blank | Browser console (F12) → paste the red error to your agent |
-| `/api/...` returns nothing locally | Normal — `python3 -m http.server` has no backend; the layer must fall back to demo data. Test APIs on the Vercel preview (below) |
+| `/api/...` returns nothing locally | Normal — `npm run dev` has no backend; the layer must fall back to demo data. Test APIs on the Vercel preview (below) |
 | `check.js` says "verified but …" | Either link a source you opened today with `checked_on`, or change the status to `assumption` |
 
 ## Testing the AI endpoints (P3, P4)
@@ -98,15 +104,10 @@ First prompt (change P1 and the brief path to yours):
 | 13:45 | Code freeze. P5: Netlify Drop backup of `site/`, incognito test |
 | 14:00 | Final session |
 
-## Work from the earlier starter
-Move it into the new paths (only the owner moves their own files):
-- `site/data/rules.json | sources.json | grants.json` → `site/layers/proposal/data/` (P2)
-- `site/data/proposal.json` → merge its components into `site/layers/proposal/data/template.json` (P3)
-- `site/js/engine.js` → `site/layers/proposal/engine.js` (P3)
-
 ## Rules of the road
 - Edit only your folder. Need another layer changed → message its owner.
-- Layers talk only via `App.emit` / `App.on` with the objects in CONTRACTS.md.
+- Layers talk only via `bus.ts` (`emit` / `on` / `useBus`) with the objects in CONTRACTS.md.
 - `git pull --rebase origin main` before every push. Small PRs. P5 merges. Never force-push `main`.
-- Everything must still work when `App.api` returns `null`.
+- Everything must still work when `api(...)` returns `null`.
+- `cd site && npm run build` must pass before you push (Vercel runs the same build).
 - API keys only in Vercel env vars, never in files or chat.

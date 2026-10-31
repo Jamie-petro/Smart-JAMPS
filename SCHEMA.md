@@ -1,4 +1,4 @@
-# Layer 2 data contract — files in `site/layers/proposal/data/`
+# Layer 2 data contract — files in `site/public/layers/proposal/data/`
 
 Owners: P2 writes `sources.json`, `rules.json`, `grants.json`, `guidelines.json`. P3 writes `template.json` and the engine. Cross-layer objects are in CONTRACTS.md. `node tools/check.js` validates all of these.
 

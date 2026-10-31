@@ -15,11 +15,11 @@ const git = (...args) => execFileSync("git", args, { cwd: ROOT, encoding: "utf8"
 
 // Mirror of the ownership table in AGENTS.md — keep in sync.
 const OWNS = {
-  P1: [/^site\/layers\/map\//, /^pipeline\/spaces\//],
-  P2: [/^site\/layers\/proposal\/data\/(sources|rules|grants|guidelines)\.json$/, /^pipeline\/sources\//],
-  P3: [/^site\/layers\/proposal\/[^/]+\.(js|css)$/, /^site\/layers\/proposal\/data\/template\.json$/, /^site\/api\/proposal\.js$/, /^pipeline\/case\//],
-  P4: [/^site\/layers\/render\//, /^site\/api\/render\.js$/, /^pipeline\/render\//],
-  P5: [/^site\/index\.html$/, /^site\/core\//, /^docs\//, /^tools\//, /^\.github\//, /^[^/]+\.md$/, /^\.gitignore$/, /^\.env\.example$/],
+  P1: [/^site\/index\.html$/, /^site\/src\/(App|main)\.tsx$/, /^site\/src\/index\.css$/, /^site\/src\/layers\/space\.ts$/, /^site\/public\/layers\/map\//, /^pipeline\/spaces\//],
+  P2: [/^site\/public\/layers\/proposal\/data\/(sources|rules|grants|guidelines)\.json$/, /^pipeline\/sources\//],
+  P3: [/^site\/src\/layers\/proposal\//, /^site\/public\/layers\/proposal\/engine\.js$/, /^site\/public\/layers\/proposal\/data\/template\.json$/, /^site\/api\/proposal\.js$/, /^pipeline\/case\//],
+  P4: [/^site\/src\/layers\/render\//, /^site\/api\/render\.js$/, /^pipeline\/render\//],
+  P5: [/^site\/src\/layers\/(bus\.ts|ui\.tsx|LayerDock\.tsx)$/, /^site\/(package(-lock)?\.json|vite\.config\.ts|tsconfig\.json|vercel\.json|metadata\.json)$/, /^docs\//, /^tools\//, /^\.github\//, /^[^/]+\.md$/, /^\.gitignore$/, /^\.env\.example$/],
 };
 const ownerOf = (file) => Object.keys(OWNS).filter((p) => OWNS[p].some((re) => re.test(file)));
 

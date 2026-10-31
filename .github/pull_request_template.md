@@ -5,6 +5,6 @@
 **Checklist**
 - [ ] I edited only my own folder (see AGENTS.md)
 - [ ] `node tools/check.js` passes
-- [ ] Ran `python3 -m http.server 8000 -d site` and clicked Map → Proposal → Render with no red errors in the browser console
+- [ ] `cd site && npm run build` passes; with `npm run dev` I picked a site, opened the dock and clicked Proposal → Render with no red errors in the console
 - [ ] Anything marked `verified` links a source I opened today
 - [ ] No keys, no `.env`

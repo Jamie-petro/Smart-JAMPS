@@ -1,6 +1,6 @@
 // POST /api/proposal  { space, draft } → { title, summary, guidelines[], visual_brief, model }   Owner: P3
 // Vercel serverless function. Key from Vercel env var ANTHROPIC_API_KEY.
-module.exports = async (req, res) => {
+export default async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const { space, draft } = req.body || {};
   if (!space || !draft) return res.status(400).json({ error: "space and draft required" });
