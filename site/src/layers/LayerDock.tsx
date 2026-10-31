@@ -31,8 +31,8 @@ export default function LayerDock() {
   }, []);
 
   const tabs: { id: Tab; label: string; ready: boolean }[] = [
-    { id: 'proposal', label: '2 · Proposal & workplan', ready: !!space },
-    { id: 'render', label: '3 · Render', ready: !!proposal }
+    { id: 'proposal', label: 'Plan', ready: !!space },
+    { id: 'render', label: 'Image', ready: !!proposal }
   ];
 
   // The navigator covers the screen; the dock stays mounted underneath so Layer 2/3 keep their state.
@@ -44,9 +44,9 @@ export default function LayerDock() {
       {overlay}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-full bg-amber-500 text-slate-950 font-bold text-xs shadow-xl"
+        className="fixed bottom-4 left-1/2 lg:left-[calc(50%-190px)] -translate-x-1/2 z-40 px-4 py-2 rounded-full bg-amber-500 text-slate-950 font-bold text-xs shadow-xl"
       >
-        Open Layer 2 · Proposal & Layer 3 · Render{space ? ` — ${space.name}` : ''}
+        Plan this site{space ? `: ${space.name}` : ''} →
       </button>
       </>
     );
@@ -54,7 +54,7 @@ export default function LayerDock() {
   return (
     <>
     {overlay}
-    <section className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[min(760px,94vw)] h-[62vh] bg-[#0e121b]/97 backdrop-blur-md border border-[#1e2430] rounded-xl shadow-2xl flex flex-col">
+    <section className="fixed bottom-4 left-1/2 lg:left-[calc(50%-190px)] -translate-x-1/2 z-40 w-[min(760px,94vw)] lg:w-[min(680px,calc(100vw-460px))] h-[62vh] bg-[#0e121b]/97 backdrop-blur-md border border-[#1e2430] rounded-xl shadow-2xl flex flex-col">
       <header className="h-10 px-3 border-b border-[#1e2430] flex items-center gap-1 shrink-0">
         {tabs.map((t) => (
           <button
@@ -71,11 +71,11 @@ export default function LayerDock() {
         <button
           onClick={() => setNavigator(true)}
           className="px-2.5 py-1 rounded text-[11px] font-semibold text-sky-300 hover:bg-[#161c28]"
-          title="Full-screen agency timeline, funding optimiser, AI audit and submission pack"
+          title="Timeline, funding, AI review and submission pack"
         >
-          Grant & agency navigator ↗
+          Navigator ↗
         </button>
-        <span className="ml-auto text-[10px] text-slate-500 hidden sm:inline">Guidance only — no approval or funding is implied.</span>
+        <span className="ml-auto text-[10px] text-slate-500 hidden sm:inline">Guidance only, not approval</span>
         <button onClick={() => setOpen(false)} className="ml-2 px-2 text-slate-400 hover:text-white" title="Minimise">
           ▾
         </button>

@@ -1242,10 +1242,10 @@ const STRATEGIC_ENHANCERS = [
 ];
 
 const CAMERA_PRESETS: Record<string, any> = {
-  axonometric: { name: 'Axonometric 3D', pitch: 60, bearing: -28, zoom: 17.8 },
-  topDown: { name: 'Top-Down CAD Plan', pitch: 0, bearing: 0, zoom: 18.0 },
-  viaductStreet: { name: 'Street Viaduct View', pitch: 68, bearing: -72, zoom: 18.2 },
-  macroIsland: { name: 'Macro Island NSC', pitch: 38, bearing: -12, zoom: 11.6 }
+  axonometric: { name: '3D', pitch: 60, bearing: -28, zoom: 17.8 },
+  topDown: { name: 'Plan', pitch: 0, bearing: 0, zoom: 18.0 },
+  viaductStreet: { name: 'Street', pitch: 68, bearing: -72, zoom: 18.2 },
+  macroIsland: { name: 'Island', pitch: 38, bearing: -12, zoom: 11.6 }
 };
 
 // ============================================================================
@@ -1441,7 +1441,7 @@ export default function App({
   // --- MONOLITH SHELL NAVIGATION & TOOLS STATE ---
   const [activeNavMode, setActiveNavMode] = useState('city'); // 'city' | 'workplan' | 'grants' | 'dossier'
   const [activeLeftRailTool, setActiveLeftRailTool] = useState('layers'); // 'layers' | 'workplan' | 'grants' | 'params' | 'api'
-  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(true);
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
   const [activeRightTab, setActiveRightTab] = useState('inspector'); // 'inspector' | 'matrix' | 'enhancers'
 
   // --- GEOSPATIAL & 4-LAYER AXONOMETRIC STATE ---
@@ -1531,7 +1531,7 @@ export default function App({
     let isMounted = true;
 
     const bootSequence = async () => {
-      setLoadingStepText('Loading OpenFreeMap vector tiles & 3D buildings…');
+      setLoadingStepText('Loading map…');
 
       // Inject MapLibre CSS if not present
       if (!document.getElementById('maplibre-gl-css')) {
@@ -1575,7 +1575,7 @@ export default function App({
             if (!isMounted) return;
             setupMapLibre3DLayers(map);
             setMapLibreReady(true);
-            setLoadingStepText('Synchronizing 4-layer axonometric twin…');
+            setLoadingStepText('Building 3D layers…');
             setTimeout(() => {
               if (isMounted) setIsLoadingBoot(false);
             }, 350);
@@ -2614,7 +2614,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
           <div className="h-4 w-[1px] bg-[#1e2430]" />
 
           <span className="text-xs text-slate-400 hidden xl:inline truncate">
-            Arts to Places SG · Placemaking Digital Twin
+            Arts to Places SG
           </span>
 
           {/* Quick Site Selector Dropdown */}
@@ -2627,11 +2627,11 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
           >
             {Object.values(SITES_DATA).map((site) => (
               <option key={site.id} value={site.id}>
-                {site.name} ({site.code})
+                {site.name}
               </option>
             ))}
             <option value="macro_island">
-              ★ Macro Island View (21.5km NSC & Rail Corridor)
+              Whole island
             </option>
           </select>
         </div>
@@ -2639,10 +2639,10 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
         {/* Center <nav>: Monolith Workspace Mode Pills */}
         <nav className="hidden md:flex items-center gap-1 bg-[#121722] p-1 rounded-lg border border-[#1e2430]">
           {[
-            { id: 'city', label: 'City & 3D Axonometric' },
-            { id: 'workplan', label: 'Agency Workplan (T-12→T-3)' },
-            { id: 'grants', label: 'Grants & Overlap Audit' },
-            { id: 'dossier', label: 'Submission Dossier' }
+            { id: 'city', label: '3D map' },
+            { id: 'workplan', label: 'Workplan' },
+            { id: 'grants', label: 'Funding' },
+            { id: 'dossier', label: 'Dossier' }
           ].map((navItem) => (
             <button
               key={navItem.id}
@@ -2682,21 +2682,8 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 hover:bg-amber-400 text-slate-950 font-semibold text-xs transition-colors"
           >
             <Printer size={13} />
-            <span className="hidden sm:inline">Dossier PDF</span>
+            <span className="hidden sm:inline">PDF</span>
           </button>
-
-          {/* Signature Monolith Gemini Connection Status Pill */}
-          <div
-            title="Gemini connection"
-            onClick={() => {
-              setActiveLeftRailTool('params');
-              setIsLeftDrawerOpen(true);
-            }}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#121722] border border-[#262f40] hover:border-emerald-500/50 cursor-pointer text-xs text-slate-300"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-medium text-[11px] tracking-wide">Gemini</span>
-          </div>
         </div>
       </header>
 
@@ -2711,22 +2698,22 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
           {[
             {
               id: 'layers',
-              title: '4-Layer 3D Axonometric & Basemap Controls',
+              title: 'Layers & map style',
               icon: Layers
             },
             {
               id: 'workplan',
-              title: 'Sequenced Agency Workplan (Whom, When, Why)',
+              title: 'Workplan',
               icon: Clock
             },
             {
               id: 'grants',
-              title: 'Funding Shortlist & Anti-Double-Dipping Guardrails',
+              title: 'Funding',
               icon: DollarSign
             },
             {
               id: 'params',
-              title: 'Proposal Parameters & Gemini AI Stress-Test',
+              title: 'Test your plan',
               icon: SlidersHorizontal
             }
           ].map((tool) => {
@@ -2760,7 +2747,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
 
           {/* Bottom Icon: Teammate Backend & API Bridge */}
           <button
-            title="Teammate Backend / API Integration Bridge"
+            title="Teammate API"
             onClick={() => {
               if (activeLeftRailTool === 'api') {
                 setIsLeftDrawerOpen(!isLeftDrawerOpen);
@@ -2787,11 +2774,11 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
             {/* Drawer Header */}
             <div className="h-10 px-3.5 border-b border-[#1e2430] flex items-center justify-between bg-[#0c0f16]">
               <span className="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-semibold">
-                {activeLeftRailTool === 'layers' && '01 // 3D Axonometric & City Layers'}
-                {activeLeftRailTool === 'workplan' && '02 // Agency Workplan Sequence'}
-                {activeLeftRailTool === 'grants' && '03 // Grant Shortlist & Overlap Audit'}
-                {activeLeftRailTool === 'params' && '04 // Proposal Stress-Test Engine'}
-                {activeLeftRailTool === 'api' && '05 // Teammate Backend API Bridge'}
+                {activeLeftRailTool === 'layers' && 'Layers'}
+                {activeLeftRailTool === 'workplan' && 'Workplan'}
+                {activeLeftRailTool === 'grants' && 'Funding'}
+                {activeLeftRailTool === 'params' && 'Test your plan'}
+                {activeLeftRailTool === 'api' && 'Teammate API'}
               </span>
               <button
                 onClick={() => setIsLeftDrawerOpen(false)}
@@ -2822,7 +2809,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     <div className="text-xs font-bold text-white mb-1">
                       {currentSite.projectTitle}
                     </div>
-                    <p className="text-[11px] text-slate-400 leading-relaxed mb-2">
+                    <p className="line-clamp-3 text-[11px] text-slate-400 leading-relaxed mb-2">
                       {currentSite.summary}
                     </p>
                     <div className="grid grid-cols-2 gap-1.5 text-[10px] font-mono">
@@ -2840,7 +2827,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     <div className="flex items-center justify-between mb-1.5">
                       <span className="text-xs font-semibold text-white flex items-center gap-1.5">
                         <Sliders size={13} className="text-amber-400" />
-                        Vertical 3D Layer Explosion
+                        Layer spacing
                       </span>
                       <span className="text-xs font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">
                         {Math.round(explosionFactor * 100)}%
@@ -2860,19 +2847,19 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                         onClick={() => setExplosionFactor(0)}
                         className="hover:text-white"
                       >
-                        0% Compact
+                        Flat
                       </button>
                       <button
                         onClick={() => setExplosionFactor(0.5)}
                         className="hover:text-white"
                       >
-                        50% Mid
+                        Mid
                       </button>
                       <button
                         onClick={() => setExplosionFactor(1)}
                         className="hover:text-white"
                       >
-                        100% Exploded
+                        Spread
                       </button>
                     </div>
                   </div>
@@ -2880,13 +2867,13 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                   {/* 4 Exploded Axonometric Layers Stack */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-[10px] font-mono uppercase text-slate-400 px-0.5">
-                      <span>Axonometric Site Tiers (L4 → L1)</span>
+                      <span>Layers</span>
                       {isolatedLayerId && (
                         <button
                           onClick={() => setIsolatedLayerId(null)}
                           className="text-amber-400 hover:underline"
                         >
-                          Show All Layers
+                          Show all
                         </button>
                       )}
                     </div>
@@ -2965,7 +2952,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                   {/* OpenFreeMap & 3D City Extrusion Settings */}
                   <div className="bg-[#121722] border border-[#1e2430] rounded-lg p-3 space-y-2.5">
                     <div className="text-[10px] font-mono uppercase text-slate-400">
-                      OpenFreeMap · MapLibre City Style
+                      Map style
                     </div>
                     <div className="grid grid-cols-1 gap-1">
                       {Object.values(OPENFREEMAP_STYLES).map((st) => (
@@ -2987,7 +2974,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     </div>
 
                     <div className="pt-1 flex items-center justify-between text-xs">
-                      <span className="text-slate-300">3D OSM City Buildings</span>
+                      <span className="text-slate-300">3D buildings</span>
                       <button
                         onClick={() => setShowOsmBuildings3D(!showOsmBuildings3D)}
                         className={`px-2.5 py-1 rounded text-[11px] font-mono font-semibold ${
@@ -3001,7 +2988,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-300">50m Noise Ring & Cadastral Lot</span>
+                      <span className="text-slate-300">Noise ring & lot</span>
                       <button
                         onClick={() =>
                           setShowGroundCadastralOverlay(!showGroundCadastralOverlay)
@@ -3209,17 +3196,17 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-white flex items-center gap-1.5">
                         <Activity size={14} className="text-emerald-400" />
-                        Live Proposal Stress-Test Sliders
+                        Test your plan
                       </span>
                       <span className="text-[10px] font-mono text-emerald-400">
-                        Gemini Ruleset
+                        Rules
                       </span>
                     </div>
 
                     {/* Crowd Size Slider */}
                     <div>
                       <div className="flex justify-between text-[11px] mb-1">
-                        <span className="text-slate-300">Expected Crowd Capacity</span>
+                        <span className="text-slate-300">Crowd size</span>
                         <span className="font-mono text-amber-400">
                           {proposalParams.crowdSize} pax
                         </span>
@@ -3243,7 +3230,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     {/* Structure Height Slider */}
                     <div>
                       <div className="flex justify-between text-[11px] mb-1">
-                        <span className="text-slate-300">Max Installation Height</span>
+                        <span className="text-slate-300">Structure height</span>
                         <span
                           className={`font-mono ${
                             proposalParams.maxStructureHeightM > 1.5
@@ -3273,7 +3260,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     {/* Sound Decibels Slider */}
                     <div>
                       <div className="flex justify-between text-[11px] mb-1">
-                        <span className="text-slate-300">Boundary Sound Level</span>
+                        <span className="text-slate-300">Sound level</span>
                         <span
                           className={`font-mono ${
                             proposalParams.soundDecibels > 65
@@ -3309,7 +3296,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     {computedAudit.paramAlerts.length === 0 ? (
                       <div className="bg-emerald-950/30 border border-emerald-500/40 rounded-lg p-3 text-xs text-emerald-200 flex items-center gap-2">
                         <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
-                        All physical parameters within BCA, SPF & SCDF fast-track exemptions.
+                        All values are within the limits this model checks.
                       </div>
                     ) : (
                       computedAudit.paramAlerts.map((al) => (
@@ -3348,7 +3335,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                       </button>
                     </div>
                     <p className="text-[11px] text-slate-400 mb-2">
-                      Every interaction in this HeartLah 3D map broadcasts live WGS84, SVY21, workplan, and grant state to your teammate’s backend.
+                      The map sends its state to the other layers through this event.
                     </p>
                     <pre className="text-[10px] font-mono text-emerald-300 bg-[#090b10] p-2.5 rounded border border-[#1e2430] overflow-x-auto max-h-64">
                       {JSON.stringify(integrationPayload, null, 2)}
@@ -3530,7 +3517,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     onClick={() => setActiveNavMode('city')}
                     className="px-3 py-1 rounded bg-[#161c28] hover:bg-[#1e2638] text-xs font-semibold text-slate-200"
                   >
-                    Return to 3D City Map
+                    Back to map
                   </button>
                 </div>
               </div>
@@ -3540,7 +3527,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
-                      Target Site Parcel
+                      Site
                     </div>
                     <div className="text-sm font-bold text-white mt-0.5">
                       {currentSite.name}
@@ -3551,7 +3538,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                   </div>
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
-                      Eligibility Readiness
+                      Readiness
                     </div>
                     <div className="text-xl font-mono font-bold text-emerald-400 mt-0.5">
                       {computedAudit.readinessScore}% Verified Fit
@@ -3573,10 +3560,10 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                   </div>
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
-                      Statutory Disclaimer
+                      Disclaimer
                     </div>
                     <div className="text-[11px] text-slate-300 mt-0.5 leading-snug">
-                      Advisory workplan only. Does not guarantee SLA, LTA, SPF, SFA, SCDF or grant approval.
+                      Guidance only. Not an approval or a grant decision.
                     </div>
                   </div>
                 </div>
@@ -3584,16 +3571,16 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                 {/* Sequenced Workplan Table */}
                 <div>
                   <h3 className="text-xs font-mono uppercase tracking-wider text-amber-400 mb-2.5">
-                    1. Chronological Agency Workplan (Whom, When, Why & Dependencies)
+                    1. Workplan
                   </h3>
                   <div className="overflow-x-auto border border-[#1e2430] rounded-lg">
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
                         <tr className="bg-[#121722] text-slate-300 border-b border-[#1e2430]">
-                          <th className="p-3 font-mono">Timeline Window</th>
-                          <th className="p-3">Agency & Statutory Licence</th>
-                          <th className="p-3">Why Approach & Statutory Trigger</th>
-                          <th className="p-3">Prerequisite Dependency</th>
+                          <th className="p-3 font-mono">When</th>
+                          <th className="p-3">Agency</th>
+                          <th className="p-3">Why</th>
+                          <th className="p-3">Needs first</th>
                           <th className="p-3">Status</th>
                         </tr>
                       </thead>
@@ -3637,17 +3624,17 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                 {/* Anti-Overlap Grant Allocation Table */}
                 <div>
                   <h3 className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2.5">
-                    2. Funding Shortlist & Anti-Double-Dipping Line-Item Audit
+                    2. Funding
                   </h3>
                   <div className="overflow-x-auto border border-[#1e2430] rounded-lg">
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
                         <tr className="bg-[#121722] text-slate-300 border-b border-[#1e2430]">
-                          <th className="p-3">Proposal Component</th>
-                          <th className="p-3">Spatial Layer</th>
-                          <th className="p-3 font-mono">Budget (SGD)</th>
-                          <th className="p-3">Assigned Grant Stream</th>
-                          <th className="p-3">Anti-Overlap Guardrail Rule</th>
+                          <th className="p-3">Item</th>
+                          <th className="p-3">Layer</th>
+                          <th className="p-3 font-mono">S$</th>
+                          <th className="p-3">Grant</th>
+                          <th className="p-3">Overlap rule</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#1e2430] bg-[#0c0f16]">
@@ -3685,12 +3672,6 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
             <div className="bg-[#0c0f16]/90 backdrop-blur-md border border-[#1e2430] rounded-md px-2.5 py-1 flex items-center gap-3 text-[10px] font-mono text-slate-400 pointer-events-auto">
               <span className="text-amber-400 font-semibold">
                 {currentSite.code}
-              </span>
-              <span>
-                WGS84: {cameraTelemetry.lat.toFixed(4)}°N, {cameraTelemetry.lng.toFixed(4)}°E
-              </span>
-              <span className="hidden sm:inline">
-                Z: {cameraTelemetry.zoom.toFixed(1)} · Pitch: {Math.round(cameraTelemetry.pitch)}° · Bearing: {Math.round(cameraTelemetry.bearing)}°
               </span>
             </div>
 
@@ -3733,9 +3714,9 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
           {/* Right Panel 3-Tab Header */}
           <div className="grid grid-cols-3 gap-1 p-1.5 bg-[#090b10] border-b border-[#1e2430]">
             {[
-              { id: 'inspector', label: 'Hotspot Rule', icon: Info },
-              { id: 'matrix', label: 'Verified vs Gap', icon: ShieldAlert },
-              { id: 'enhancers', label: 'AI Enhancers', icon: Sparkles }
+              { id: 'inspector', label: 'Detail', icon: Info },
+              { id: 'matrix', label: 'Checks', icon: ShieldAlert },
+              { id: 'enhancers', label: 'Improve', icon: Sparkles }
             ].map((t) => {
               const Icon = t.icon;
               return (
@@ -3794,7 +3775,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
 
                   <div className="bg-[#0c0f16] border border-[#1e2430] rounded p-2.5 text-xs space-y-1">
                     <div className="text-[10px] font-mono uppercase text-slate-400">
-                      Why Approach & Statutory Trigger
+                      Why
                     </div>
                     <p className="text-slate-200 leading-relaxed text-[11px]">
                       {selectedHotspot.whyApproach}
@@ -3803,7 +3784,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
 
                   <div className="bg-[#0c0f16] border border-[#1e2430] rounded p-2.5 text-xs space-y-1">
                     <div className="text-[10px] font-mono uppercase text-slate-400">
-                      Technical Clearance Specification
+                      What to do
                     </div>
                     <p className="text-slate-200 leading-relaxed text-[11px]">
                       {selectedHotspot.requirementDetail}
@@ -3812,7 +3793,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
 
                   <div className="bg-sky-950/30 border border-sky-500/30 rounded p-2.5 text-xs space-y-1">
                     <div className="text-[10px] font-mono uppercase text-sky-300">
-                      Linked Grant Eligibility & Guardrail
+                      Funding
                     </div>
                     <p className="text-sky-100 leading-relaxed text-[11px]">
                       {selectedHotspot.linkedGrant}
@@ -3880,7 +3861,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
             {activeRightTab === 'matrix' && (
               <div className="space-y-2.5">
                 <div className="bg-amber-950/30 border border-amber-500/40 rounded-lg p-2.5 text-[11px] text-amber-200 leading-relaxed">
-                  <strong>Judge Evaluation Guardrail:</strong> Explicitly separates verified statutory rules from provisional assumptions and missing site data. Does not promise permit or grant approvals.
+                  <strong>Note:</strong> Explicitly separates verified statutory rules from provisional assumptions and missing site data. Does not promise permit or grant approvals.
                 </div>
 
                 {computedAudit.matrixItems.map((item) => (
@@ -3926,7 +3907,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
             {activeRightTab === 'enhancers' && (
               <div className="space-y-2.5">
                 <div className="bg-[#121722] border border-[#1e2430] rounded-lg p-2.5 text-[11px] text-slate-300">
-                  Toggle genuine proposal improvements below to mutate the 3D axonometric model on the city map and strengthen grant & licence eligibility.
+                  Turn on real changes to the plan. The 3D model updates.
                 </div>
 
                 {STRATEGIC_ENHANCERS.map((enh) => {
@@ -3961,10 +3942,10 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                         {enh.targetLayer} · Clears {enh.agencyResolved}
                       </div>
                       <p className="text-[11px] text-slate-300 leading-relaxed mb-1">
-                        <strong>3D Map Mutation:</strong> {enh.visualEffect}
+                        <strong>On the map:</strong> {enh.visualEffect}
                       </p>
                       <p className="text-[11px] text-slate-400 leading-relaxed">
-                        <strong>Eligibility Impact:</strong> {enh.regulatoryEffect}
+                        <strong>Effect:</strong> {enh.regulatoryEffect}
                       </p>
                     </div>
                   );

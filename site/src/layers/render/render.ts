@@ -45,6 +45,6 @@ export async function generate(space: Space, p: any, prompt: string, size: strin
     generated_at: new Date().toISOString(),
     is_demo: !live
   };
-  const note = live ? '' : 'Image backend not available — showing a sample AI concept for this type of site. It is not an image of this site.';
+  const note = live ? '' : 'Sample image for this type of site (image service not connected).';
   return { render, note };
 }

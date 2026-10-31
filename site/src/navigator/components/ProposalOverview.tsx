@@ -96,7 +96,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
                 <div className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl">
                   <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                     <Users className="w-3.5 h-3.5" />
-                    <span>Est. Footfall</span>
+                    <span>Audience</span>
                   </div>
                   <div className="text-sm font-bold text-slate-900 dark:text-white mt-1 font-mono tabular-nums">
                     {proposal.expectedAudience.toLocaleString()}
@@ -116,7 +116,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
                 <div className="p-3 bg-slate-50 dark:bg-slate-900/60 rounded-xl">
                   <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
                     <Volume2 className="w-3.5 h-3.5" />
-                    <span>Acoustics</span>
+                    <span>Sound</span>
                   </div>
                   <div className="text-sm font-bold text-slate-900 dark:text-white mt-1 font-mono tabular-nums">
                     {proposal.hasAmplifiedSound ? `~${proposal.decibelEstimateDb} dB` : 'Ambient only'}
@@ -131,7 +131,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
                 <span className="font-semibold text-slate-900 dark:text-white font-mono tabular-nums text-sm">
                   S${proposal.totalBudget.toLocaleString()} SGD
                 </span>
-                <span>Total Budget Allocation</span>
+                <span>Total budget</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
                   onClick={() => onNavigateTab('timeline')}
                   className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-900 dark:text-white rounded-lg transition-colors"
                 >
-                  <span>View Timeline Workplan</span>
+                  <span>See timeline</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
                 <button
@@ -148,7 +148,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
                   className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 bg-rose-700 hover:bg-rose-800 text-white rounded-lg transition-all shadow-sm disabled:opacity-50"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Strengthen with AI</span>
+                  <span>AI review</span>
                 </button>
               </div>
             </div>
@@ -163,7 +163,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
           <div className="flex items-center gap-2 mb-3">
             <Lightbulb className="w-4 h-4 text-amber-600 dark:text-amber-400" />
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-              Community Co-Creation & Placemaking Intent
+              Community involvement
             </h3>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
@@ -190,7 +190,7 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
           <div className="flex items-center gap-2 mb-3">
             <ShieldAlert className="w-4 h-4 text-rose-600 dark:text-rose-400" />
             <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-              Site Safety & Regulatory Compliance Protocols
+              Safety
             </h3>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
@@ -200,10 +200,9 @@ export const ProposalOverview: React.FC<ProposalOverviewProps> = ({
           <div className="p-3.5 bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/50 rounded-xl text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2.5">
             <Info className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
             <div>
-              <span className="font-semibold">Regulatory Integrity Note: </span>
-              Temporary placemaking in Singapore does not receive automatic exemptions.
-              All structures, sound limits, and power lines must be filed with SLA, SCDF, and URA respectively.
-            </div>
+              <span className="font-semibold">Note: </span>
+              Check every permit with the agency.
+                          </div>
           </div>
         </div>
       </div>

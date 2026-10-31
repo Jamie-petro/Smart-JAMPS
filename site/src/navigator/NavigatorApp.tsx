@@ -63,7 +63,7 @@ export default function App({ twinCase }: { twinCase?: Proposal | null } = {}) {
   };
 
   // Run AI Audit via server endpoint
-  const runAIAudit = async () => {
+  const runAIAudit = async (silent = false) => {
     setIsAnalyzing(true);
     try {
       const response = await fetch('/api/analyze-proposal', {
@@ -77,13 +77,13 @@ export default function App({ twinCase }: { twinCase?: Proposal | null } = {}) {
       if (!data?.analysis) throw new Error('no analysis returned');
       setAiAnalyses(prev => ({ ...prev, [activeProposal.id]: data.analysis }));
       setAnalysisSource(data.source || 'AI');
-      showToast(`AI audit completed (${data.source || 'AI'}).`);
+      if (!silent) showToast(`AI review done (${data.source || 'AI'}).`);
     } catch (err) {
       // No backend (local dev, static host) or AI error: fixed rule-based advice, labelled as such.
       console.warn('AI audit unavailable, using rule-based fallback:', err);
       setAiAnalyses(prev => ({ ...prev, [activeProposal.id]: generateFallbackAnalysis(activeProposal) }));
       setAnalysisSource('rule-based fallback (not AI)');
-      showToast('AI audit unavailable here — showing rule-based fallback advice.');
+      if (!silent) showToast('AI not connected here: showing fixed rule-based advice.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -92,7 +92,7 @@ export default function App({ twinCase }: { twinCase?: Proposal | null } = {}) {
   // Run audit automatically once on initial load for the Telok Ayer preset
   useEffect(() => {
     if (!aiAnalyses[activeProposal.id]) {
-      runAIAudit();
+      runAIAudit(true);
     }
   }, [selectedId]);
 
@@ -155,7 +155,7 @@ export default function App({ twinCase }: { twinCase?: Proposal | null } = {}) {
           onOpenExport={() => setIsExportOpen(true)}
           isDark={isDark}
           toggleTheme={toggleTheme}
-          onRunAIAudit={runAIAudit}
+          onRunAIAudit={() => runAIAudit()}
           isAnalyzing={isAnalyzing}
         />
 
@@ -176,7 +176,7 @@ export default function App({ twinCase }: { twinCase?: Proposal | null } = {}) {
             <ProposalOverview
               proposal={activeProposal}
               onNavigateTab={tab => setActiveTab(tab)}
-              onRunAIAudit={runAIAudit}
+              onRunAIAudit={() => runAIAudit()}
               isAnalyzing={isAnalyzing}
             />
           )}
@@ -216,7 +216,7 @@ export default function App({ twinCase }: { twinCase?: Proposal | null } = {}) {
               proposal={activeProposal}
               analysis={aiAnalyses[activeProposal.id] || null}
               isAnalyzing={isAnalyzing}
-              onRunAudit={runAIAudit}
+              onRunAudit={() => runAIAudit()}
               onApplyImprovement={handleApplyImprovement}
               analysisSource={analysisSource}
             />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, FileText, Moon, Sun, ShieldCheck, Sparkles, ExternalLink } from 'lucide-react';
+import { Compass, FileText, Moon, Sun, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: string;
@@ -21,12 +21,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   isAnalyzing
 }) => {
   const navItems = [
-    { id: 'overview', label: 'Proposal Dossier' },
-    { id: 'timeline', label: 'Clearance Roadmap' },
-    { id: 'agencies', label: 'Agency Matrix' },
-    { id: 'funding', label: 'Funding & Co-Eligibility' },
-    { id: 'archives', label: 'NLB Heritage Archives' },
-    { id: 'ai-audit', label: 'AI Proposal Enhancer' }
+    { id: 'overview', label: 'Overview' },
+    { id: 'timeline', label: 'Timeline' },
+    { id: 'agencies', label: 'Agencies' },
+    { id: 'funding', label: 'Funding' },
+    { id: 'archives', label: 'Archives' },
+    { id: 'ai-audit', label: 'AI review' }
   ];
 
   return (
@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 Arts to Places
               </span>
               <span className="text-xs text-slate-600 dark:text-slate-400 font-normal block">
-                Singapore Placemaking Navigator
+                Permits & funding
               </span>
             </div>
           </div>
@@ -78,24 +78,12 @@ export const Navbar: React.FC<NavbarProps> = ({
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
 
-            <a
-              href="https://share.gemini.google/3iOhLJGpEr7L"
-              target="_blank"
-              rel="noreferrer"
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/40 rounded-lg transition-colors border border-rose-200/80 dark:border-rose-900/60"
-              title="Open Arts Placemaking AI Navigator in Google Gemini"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
-              <span>Gemini Session</span>
-              <ExternalLink className="w-3 h-3 text-rose-500" />
-            </a>
-
             <button
               onClick={onOpenExport}
               className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors whitespace-nowrap shrink-0 border border-slate-200/60 dark:border-slate-700"
             >
               <FileText className="w-3.5 h-3.5 text-slate-500" />
-              <span>Export Dossier</span>
+              <span>Export</span>
             </button>
 
             <button
@@ -104,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-rose-700 hover:bg-rose-800 active:scale-95 rounded-lg transition-all shadow-sm disabled:opacity-50 whitespace-nowrap shrink-0"
             >
               <Sparkles className={`w-3.5 h-3.5 ${isAnalyzing ? 'animate-spin' : ''}`} />
-              <span>{isAnalyzing ? 'Auditing...' : 'Run AI Audit'}</span>
+              <span>{isAnalyzing ? 'Checking…' : 'AI review'}</span>
             </button>
           </div>
         </div>

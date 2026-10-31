@@ -9,9 +9,9 @@ export default function NavigatorOverlay({ onClose }: { onClose: () => void }) {
     <div className="fixed inset-0 z-[60] overflow-y-auto bg-slate-100 dark:bg-slate-950">
       <button
         onClick={onClose}
-        className="fixed bottom-4 left-4 z-[70] px-3 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold shadow-xl"
+        className="fixed bottom-4 right-4 z-[70] px-3 py-1.5 rounded-full bg-amber-500 text-slate-950 text-xs font-bold shadow-xl"
       >
-        ← Back to 3D twin
+        ← Back to map
       </button>
       <NavigatorApp twinCase={twinCase} />
     </div>

@@ -39,3 +39,16 @@ export function Chip({ children }: { children: React.ReactNode }) {
 export function H({ children }: { children: React.ReactNode }) {
   return <h3 className="text-[11px] font-mono uppercase tracking-wider text-amber-400 mt-4 mb-1.5">{children}</h3>;
 }
+
+// Collapsible section: one line until opened.
+export function Section({ title, open, children }: { title: React.ReactNode; open?: boolean; children: React.ReactNode }) {
+  return (
+    <details open={open} className="border-t border-[#1e2430] py-2 group">
+      <summary className="cursor-pointer list-none flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-amber-400">
+        <span className="text-slate-500 group-open:rotate-90 transition-transform">›</span>
+        {title}
+      </summary>
+      <div className="mt-2">{children}</div>
+    </details>
+  );
+}

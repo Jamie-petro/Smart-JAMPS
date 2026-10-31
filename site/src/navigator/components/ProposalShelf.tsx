@@ -47,17 +47,17 @@ export const ProposalShelf: React.FC<ProposalShelfProps> = ({
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <h2 className="text-xs font-bold tracking-wider text-slate-600 dark:text-slate-400 uppercase">
-              Placemaking Case Shelf
+              Cases
             </h2>
             <span className="text-xs text-slate-600 dark:text-slate-400">·</span>
-            <span className="text-xs text-slate-600 dark:text-slate-400">Select a project to review clearance & funding</span>
+            <span className="text-xs text-slate-600 dark:text-slate-400">Pick one</span>
           </div>
           <button
             onClick={onOpenCreate}
             className="inline-flex items-center gap-1 text-xs font-semibold text-rose-700 dark:text-rose-400 hover:text-rose-800 hover:underline transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>+ Test Custom Proposal</span>
+            <span>New case</span>
           </button>
         </div>
 
@@ -85,7 +85,7 @@ export const ProposalShelf: React.FC<ProposalShelfProps> = ({
                     {isSelected && (
                       <span className="flex items-center gap-1 text-xs font-semibold text-rose-700 dark:text-rose-400">
                         <Check className="w-3.5 h-3.5" />
-                        <span>Active Case</span>
+                        <span>Selected</span>
                       </span>
                     )}
                   </div>
@@ -104,7 +104,7 @@ export const ProposalShelf: React.FC<ProposalShelfProps> = ({
                   <span className="font-mono tabular-nums font-semibold text-slate-700 dark:text-slate-300">
                     S${proposal.totalBudget.toLocaleString()} SGD
                   </span>
-                  <span>{proposal.durationDays} Days Duration</span>
+                  <span>{proposal.durationDays} days</span>
                 </div>
               </button>
             );
