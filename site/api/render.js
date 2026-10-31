@@ -23,14 +23,19 @@ async function openai(prompt, size) {
   return { images, model };
 }
 
-async function gemini(prompt) {
+// Nano Banana = gemini-2.5-flash-image (set GEMINI_IMAGE_MODEL for a newer Nano Banana model).
+const ASPECT = { "1536x1024": "3:2", "1024x1024": "1:1", "1024x1536": "2:3" };
+async function gemini(prompt, size) {
   if (!process.env.GEMINI_API_KEY) throw new Error("GEMINI_API_KEY not set");
   const model = process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image";
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
-    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-  });
+  const call = (generationConfig) =>
+    fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
+      body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }], generationConfig }),
+    });
+  let r = await call({ responseModalities: ["TEXT", "IMAGE"], imageConfig: { aspectRatio: ASPECT[size] || "3:2" } });
+  if (r.status === 400) r = await call({ responseModalities: ["TEXT", "IMAGE"] }); // model without imageConfig support
   const j = await r.json();
   if (!r.ok) throw new Error(`gemini ${r.status}: ${j?.error?.message || "error"}`);
   const parts = j.candidates?.[0]?.content?.parts || [];
@@ -42,7 +47,7 @@ module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
   const { prompt, size = "1536x1024" } = req.body || {};
   if (!prompt) return res.status(400).json({ error: "prompt required" });
-  const first = (process.env.IMAGE_PROVIDER || "openai").toLowerCase() === "gemini" ? "gemini" : "openai";
+  const first = (process.env.IMAGE_PROVIDER || "gemini").toLowerCase() === "openai" ? "openai" : "gemini";
   const order = first === "gemini" ? [gemini, openai] : [openai, gemini];
   const errors = [];
   for (const provider of order) {
