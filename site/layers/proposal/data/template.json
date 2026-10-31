@@ -1,54 +1,68 @@
 {
  "id": "case-1",
- "title": "SAMPLE \u2014 Light & Sound at {space}",
+ "title": "Lantern Lines at {space}",
  "applicant": {
-  "name": "SAMPLE Collective",
+  "name": "Lantern Lines Collective (illustrative applicant)",
   "type": "informal_group",
   "uen": null,
-  "track_record_years": 1
+  "track_record_years": 2
  },
- "summary": "SAMPLE: A two-evening music performance and light installation, with a resident workshop to co-create the installation.",
+ "summary": "Two free evenings at {space}. The weekend before, residents make paper-and-LED lanterns in a workshop; on the event nights the lanterns join an artist-made walk-through light installation, with a short acoustic music set and a residents' drinks stall.",
  "event_start": "2027-03-13",
  "event_end": "2027-03-14",
  "assumptions": [
-  "SAMPLE: audience size is the group's estimate",
-  "SAMPLE: site availability not confirmed"
+  "Audience size is the group's estimate, capped at the space's estimated capacity",
+  "Site availability on these dates is not confirmed",
+  "The group has no UEN; members are Singapore Citizens or PRs",
+  "Budgets are rough estimates, not quotes"
  ],
  "components": [
   {
-   "id": "c-perf",
-   "label": "Music performance",
-   "type": "performance",
-   "audience_size": 300,
-   "ticketed": false,
-   "amplified_sound": true,
-   "temporary_structure": true,
-   "food": false,
-   "budget_sgd": 12000,
-   "community_participation": false
-  },
-  {
-   "id": "c-inst",
-   "label": "Light installation",
-   "type": "installation",
-   "audience_size": null,
-   "ticketed": false,
-   "amplified_sound": false,
-   "temporary_structure": true,
-   "food": false,
-   "budget_sgd": 8000,
-   "community_participation": false
-  },
-  {
    "id": "c-work",
-   "label": "Resident co-creation workshop",
+   "label": "Lantern-making workshop with residents",
    "type": "workshop",
    "audience_size": 30,
    "ticketed": false,
    "amplified_sound": false,
    "temporary_structure": false,
    "food": false,
-   "budget_sgd": 2000,
+   "budget_sgd": 1500,
+   "community_participation": true
+  },
+  {
+   "id": "c-inst",
+   "label": "Walk-through light installation",
+   "type": "installation",
+   "audience_size": null,
+   "ticketed": false,
+   "amplified_sound": false,
+   "temporary_structure": true,
+   "food": false,
+   "budget_sgd": 4000,
+   "community_participation": false
+  },
+  {
+   "id": "c-perf",
+   "label": "Acoustic music set",
+   "type": "performance",
+   "audience_size": 150,
+   "ticketed": false,
+   "amplified_sound": true,
+   "temporary_structure": true,
+   "food": false,
+   "budget_sgd": 3000,
+   "community_participation": false
+  },
+  {
+   "id": "c-food",
+   "label": "Residents' drinks stall",
+   "type": "food_stall",
+   "audience_size": null,
+   "ticketed": false,
+   "amplified_sound": false,
+   "temporary_structure": false,
+   "food": true,
+   "budget_sgd": 500,
    "community_participation": true
   }
  ]

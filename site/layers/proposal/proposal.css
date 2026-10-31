@@ -7,3 +7,7 @@
 .pp-improve { font-size: 14px; border-left: 3px solid var(--accent); padding-left: 8px; margin: 4px 0; }
 .pp-warn { font-size: 14px; border-left: 3px solid var(--warn); padding-left: 8px; margin: 4px 0; }
 #pp-brief { width: 100%; }
+.pp-crit { list-style: none; padding: 0; margin: 4px 0; font-size: 13px; }
+.pp-crit li { margin-bottom: 2px; }
+.not-met { color: var(--bad); }
+.pp-steps .chip { font-size: 11px; }

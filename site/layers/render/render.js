@@ -51,7 +51,7 @@
          <button class="primary" id="rd-go">Generate image</button></p>
       ${note ? `<p class="meta">${E(note)}</p>` : ""}
       <div class="rd-gallery">${gallery
-        .map((r) => r.images.map((im) => `<figure><img src="${im.src}" alt="${E(im.alt)}"><figcaption class="meta">${E(r.model)}${r.is_demo ? " · demo" : ""} · ${E(r.generated_at.slice(11, 16))}</figcaption></figure>`).join(""))
+        .map((r) => r.images.map((im) => `<figure><img src="${im.src}" alt="${E(im.alt)}"><figcaption class="meta">AI-generated concept, not a design or approval · ${E(r.model)}${r.is_demo ? " · demo" : ""} · ${E(r.generated_at.slice(11, 16))}</figcaption></figure>`).join(""))
         .join("")}</div>`;
     panel.querySelector("#rd-go").onclick = generate;
   }
