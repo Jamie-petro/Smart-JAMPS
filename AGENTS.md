@@ -15,7 +15,7 @@ One page, three layers:
 - `site/` is deployed by Vercel (Root Directory = `site`): a **Vite + React + TypeScript + Tailwind** app (`npm run build` → `dist/`, set in `site/vercel.json`).
 - **Layer 1 is the app shell:** `site/src/App.tsx` (the digital twin). It broadcasts `window` event `artsToPlaces:stateChange` and accepts `artsToPlaces:externalCommand`. Don't restructure it.
 - **Layers 2 and 3** live in `site/src/layers/` and are shown in the dock (`LayerDock.tsx`) on top of the twin. `space.ts` turns the twin's site into a `Space`. Layers talk only through `site/src/layers/bus.ts` (`emit` / `on` / `useBus`, events in `CONTRACTS.md`). Never import another layer's panel.
-- The dock's **Review** tab (`site/src/layers/review/`, from the render-layer zip) asks `/api/analyze-proposal` (Gemini) to review the plan, falling back to fixed rule-based advice labelled as such, and lists heritage reading leads marked unverified. The render layer's timeline, budget table and export were merged into the Plan tab; its own case list, agency matrix and full-screen view were removed as duplicates.
+- The dock's **Review** tab (`site/src/layers/review/`, from the render-layer zip) has a chat about the plan (`/api/advisor`, answers offline from the plan data when no AI), asks `/api/analyze-proposal` to review the plan (ideas can be added to the plan with `plan:idea`), falling back to fixed rule-based advice labelled as such, and lists heritage reading leads marked unverified. The render layer's timeline, budget table and export were merged into the Plan tab; its own case list, agency matrix and full-screen view were removed as duplicates.
 - Layer 2's rules engine (`site/public/layers/proposal/engine.js`) and data (`site/public/layers/proposal/data/*.json`) are plain JS/JSON served as static files, so `tools/check.js` and Node can test them.
 - `site/api/*.js` = Vercel serverless functions (ES modules, `export default`, Node built-in `fetch`, no dependencies). Keys from `process.env` only.
 - Every layer must work when `api(...)` returns `null` (no backend, local dev, static host).
@@ -26,8 +26,8 @@ One page, three layers:
 | P1 Layer 1 Map (mugheeskiyani115-oss) | `site/src/App.tsx`, `site/src/main.tsx`, `site/src/index.css`, `site/index.html`, `site/src/layers/space.ts`, `site/public/layers/map/`, `pipeline/spaces/` | `pipeline/spaces/README.md` |
 | P2 Layer 2 data | `site/public/layers/proposal/data/` `sources.json`, `rules.json`, `grants.json`, `guidelines.json`; `pipeline/sources/` | `pipeline/sources/README.md` |
 | P3 Layer 2 logic | `site/src/layers/proposal/`, `site/public/layers/proposal/engine.js`, `data/template.json`; `site/api/proposal.js`; `pipeline/case/` | `pipeline/case/README.md` |
-| P4 Layer 3 Render (RestfulCube) + Review (render-layer zip) | `site/src/layers/render/`, `site/src/layers/review/`, `site/public/layers/render/`, `site/api/render.js`, `site/api/analyze-proposal.js`, `pipeline/render/` | `pipeline/render/README.md` |
-| P5 Shell & integration | `site/src/layers/{bus.ts,ui.tsx,LayerDock.tsx}`, `site/package*.json`, `site/vite.config.ts`, `site/vercel.json`, `docs/`, `tools/`, `.github/`, root `*.md` | `docs/README.md` |
+| P4 Layer 3 Render (RestfulCube) + Review (render-layer zip) | `site/src/layers/render/`, `site/src/layers/review/`, `site/public/layers/render/`, `site/api/render.js`, `site/api/analyze-proposal.js`, `site/api/advisor.js`, `pipeline/render/` | `pipeline/render/README.md` |
+| P5 Shell & integration | `site/src/layers/{bus.ts,ui.tsx,LayerDock.tsx}`, `site/api/_lib/`, `site/package*.json`, `site/vite.config.ts`, `site/vercel.json`, `docs/`, `tools/`, `.github/`, root `*.md` | `docs/README.md` |
 
 If the task needs a change outside your folder (a new bus event, a new contract field, someone else's file): **stop and tell the human** what to ask the owner for. Do not make the change.
 

@@ -15,7 +15,7 @@ useBus()                      // React hook → { space, proposal, render }, re-
 api(path, body)               // POST /api/<path>; resolves null if no backend or error
 ```
 Layer 1 → bus: `LayerDock.tsx` listens to the twin's `window` event `artsToPlaces:stateChange` and emits `space:selected` with `toSpace(site, proposalParameters)` (`space.ts`). To drive the twin from code, dispatch `artsToPlaces:externalCommand` with `{ action: "SELECT_SITE", siteId }`.
-Events: `space:selected` (Space), `proposal:ready` (Proposal), `render:ready` (Render).
+Events: `space:selected` (Space), `proposal:ready` (Proposal), `render:ready` (Render), and `plan:idea` (string: a change accepted in the Review tab; Layer 2 adds it to the plan's ideas).
 Selecting a new space clears `proposal` and `render`.
 
 ## Space  — produced by Layer 1
@@ -79,6 +79,9 @@ Same shape as the earlier `proposal.json` (see SCHEMA.md) plus:
 |---|---|---|---|
 | `POST /api/proposal` | P3 | `{ space, draft }` | `{ title, summary, guidelines[], visual_brief, model }` |
 | `POST /api/render` | P4 | `{ prompt, size }` | `{ images: [{src, alt}], model }` |
+| `POST /api/advisor` | P4 | `{ question, history?, plan }` (`planForChat` in `review.ts`) | `{ answer, model }` |
 | `POST /api/analyze-proposal` | P4 | `{ proposal }` (built by `toAuditRequest` in `review.ts`) | `{ success, analysis, source }`; 502 when Gemini is unavailable |
+
+All endpoints call `site/api/_lib/llm.js`: Claude (`ANTHROPIC_API_KEY`, `LLM_MODEL`) first, then Gemini (`GEMINI_API_KEY`, `GEMINI_TEXT_MODEL`). On failure they return `{ error }` with the reason, and the browser shows it.
 
 Keys only in Vercel env vars. Every layer must still work with demo data when `api(...)` returns `null` (local dev, static host or offline).

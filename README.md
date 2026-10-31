@@ -23,7 +23,9 @@ site/                          ← deployed (Vercel Root Directory = site; Vite 
   public/layers/map/data/       spaces.geojson (real candidate spaces, not yet in the twin)  P1
   api/proposal.js               serverless LLM drafting                          P3
   api/render.js                 serverless image generation                      P4
-  api/analyze-proposal.js       serverless Gemini plan review (Review tab)     P4
+  api/analyze-proposal.js       serverless AI plan review (Review tab)           P4
+  api/advisor.js                serverless chat about the plan (Review tab)      P4
+  api/_lib/llm.js               shared Claude → Gemini calls for all endpoints   P5
 pipeline/                      not deployed: task briefs, notes, prompts, raw outputs
 tools/check.js                 validator — run before every push                 P5
 .github/                       PR template + CI running tools/check.js           P5

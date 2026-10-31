@@ -3524,7 +3524,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
 
               <div className="flex-1 overflow-y-auto monolith-scroll p-6 space-y-6">
                 {/* Summary Header */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
                       Site
@@ -3536,6 +3536,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                       {currentSite.code} · {currentSite.lat.toFixed(4)}°N, {currentSite.lng.toFixed(4)}°E
                     </div>
                   </div>
+                  {activeNavMode !== 'grants' && (
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
                       Readiness
@@ -3547,6 +3548,8 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                       {Object.values(enhancers).filter(Boolean).length} of 4 Strategic Enhancers Active
                     </div>
                   </div>
+                  )}
+                  {activeNavMode !== 'workplan' && (
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
                       NAC P&P + MCCY OurSG
@@ -3558,6 +3561,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                       {computedAudit.grantConflicts.length} Double-Dipping Conflicts
                     </div>
                   </div>
+                  )}
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
                     <div className="text-[10px] font-mono text-slate-400 uppercase">
                       Disclaimer
@@ -3569,9 +3573,10 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                 </div>
 
                 {/* Sequenced Workplan Table */}
+                {activeNavMode !== 'grants' && (
                 <div>
                   <h3 className="text-xs font-mono uppercase tracking-wider text-amber-400 mb-2.5">
-                    1. Workplan
+                    Workplan
                   </h3>
                   <div className="overflow-x-auto border border-[#1e2430] rounded-lg">
                     <table className="w-full text-left border-collapse text-xs">
@@ -3620,11 +3625,13 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     </table>
                   </div>
                 </div>
+                )}
 
                 {/* Anti-Overlap Grant Allocation Table */}
+                {activeNavMode !== 'workplan' && (
                 <div>
                   <h3 className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2.5">
-                    2. Funding
+                    Funding
                   </h3>
                   <div className="overflow-x-auto border border-[#1e2430] rounded-lg">
                     <table className="w-full text-left border-collapse text-xs">
@@ -3663,6 +3670,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                     </table>
                   </div>
                 </div>
+                )}
               </div>
             </div>
           )}

@@ -24,9 +24,10 @@ export interface BusState {
   proposal: any | null;
   render: any | null;
 }
-type Event = 'space:selected' | 'proposal:ready' | 'render:ready';
+// 'plan:idea' (string): a change the user accepted in Review; Layer 2 adds it to the plan's ideas.
+type Event = 'space:selected' | 'proposal:ready' | 'render:ready' | 'plan:idea';
 
-const KEY: Record<Event, keyof BusState> = {
+const KEY: Partial<Record<Event, keyof BusState>> = {
   'space:selected': 'space',
   'proposal:ready': 'proposal',
   'render:ready': 'render'
@@ -37,7 +38,8 @@ const subscribers = new Set<() => void>();
 let version = 0;
 
 export function emit(event: Event, payload: any) {
-  state[KEY[event]] = payload;
+  const key = KEY[event];
+  if (key) state[key] = payload;
   // Selecting a new space clears proposal and render; a new proposal clears render.
   if (event === 'space:selected') state.proposal = state.render = null;
   if (event === 'proposal:ready') state.render = null;
@@ -64,6 +66,28 @@ export function useBus(): BusState {
     () => version
   );
   return state;
+}
+
+// POST /api/<path> → { data } or { error } with the server's reason (e.g. "ANTHROPIC_API_KEY not set").
+export async function apiCall(path: string, body: unknown): Promise<{ data?: any; error?: string }> {
+  try {
+    const r = await fetch(`/api/${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body || {})
+    });
+    const text = await r.text();
+    let j: any = null;
+    try {
+      j = JSON.parse(text);
+    } catch {
+      // Static hosts / local dev answer with HTML or 404.
+    }
+    if (r.ok && j) return { data: j };
+    return { error: j?.error || (r.status === 404 || !j ? 'no backend here (static host or local dev)' : `HTTP ${r.status}`) };
+  } catch (e: any) {
+    return { error: `network error: ${e.message || e}` };
+  }
 }
 
 // POST /api/<path>; resolves null when there is no backend (static host, local dev) or on error.

@@ -1,7 +1,7 @@
 // Layer 2 — Proposal, curation guidelines, workplan, funding. Owner: P3 (data files: P2).
 // Listens "space:selected" → builds Proposal → emits "proposal:ready" (see CONTRACTS.md).
 import React, { useEffect, useMemo, useState } from 'react';
-import { api, emit, useBus } from '../bus';
+import { apiCall, emit, on, useBus } from '../bus';
 import { Badge, Section, SourceLink } from '../ui';
 import { buildProposal, downloadPlan, loadData, loadEngine, mergeAiDraft, PHASES, phaseOf, type Data } from './proposal';
 
@@ -17,6 +17,10 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
   const [note, setNote] = useState('');
   const [brief, setBrief] = useState('');
   const [byTime, setByTime] = useState(false);
+  const [added, setAdded] = useState<string[]>([]);
+
+  // Ideas accepted in the Review tab become part of this plan (ideas list and download).
+  useEffect(() => on('plan:idea', (text: string) => setAdded((a) => (a.includes(text) ? a : [...a, text]))), []);
 
   useEffect(() => {
     Promise.all([loadData(), loadEngine()])
@@ -29,6 +33,7 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
     setEnabled({});
     setTicketed(false);
     setAi(null);
+    setAdded([]);
   }, [space?.id]);
 
   const base = useMemo(
@@ -39,18 +44,23 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
   useEffect(() => {
     if (!useLLM || !base || !space) return setAi(null);
     let live = true;
-    setNote('Drafting with AI…');
-    api('proposal', { space, draft: base }).then((res) => {
+    setNote('Rewriting with AI…');
+    apiCall('proposal', { space, draft: base }).then(({ data, error }) => {
       if (!live) return;
-      setAi(res);
-      setNote(res ? '' : 'AI drafting unavailable here — using the template.');
+      setAi(data || null);
+      setNote(data ? '' : `AI not available (${error}). Showing the template text.`);
     });
     return () => {
       live = false;
     };
   }, [useLLM, base, space]);
 
-  const p = useMemo(() => (base ? mergeAiDraft(base, ai) : null), [base, ai]);
+  const p = useMemo(() => {
+    if (!base) return null;
+    const m = mergeAiDraft(base, ai);
+    const mine = added.map((text, i) => ({ id: `added-${i}`, category: 'programming', text, why: 'Added from Review', source_id: null, status: 'assumption', added: true }));
+    return { ...m, guidelines: [...m.guidelines, ...mine] };
+  }, [base, ai, added]);
   useEffect(() => {
     if (!p) return;
     setBrief(p.visual_brief);
@@ -159,6 +169,7 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
         <ul className="list-disc pl-4 space-y-1">
           {p.guidelines.map((g: any) => (
             <li key={g.id}>
+              {g.added ? <span className="text-emerald-300">Added: </span> : null}
               {g.text} <Badge s={g.status} />
               {g.source_id ? <> <SourceLink source={srcById(g.source_id)} /></> : null}
             </li>

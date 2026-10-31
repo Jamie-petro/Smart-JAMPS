@@ -10,6 +10,9 @@
     },
     "api/analyze-proposal.js": {
       "maxDuration": 30
+    },
+    "api/advisor.js": {
+      "maxDuration": 30
     }
   }
 }
