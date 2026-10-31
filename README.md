@@ -45,4 +45,8 @@ Open http://localhost:3000. The APIs fall back to template text and sample AI co
 ## Deploy
 Vercel → New Project → import repo → Root Directory **`site`** → Deploy. `site/vercel.json` sets the build (`npm run build` → `dist`), so the Framework setting can stay **Other**.
 Project Settings → Environment Variables: `ANTHROPIC_API_KEY`, `LLM_MODEL`, `IMAGE_PROVIDER` (`gemini` = Nano Banana, default | `openai`), `GEMINI_API_KEY` / `GEMINI_IMAGE_MODEL` or `OPENAI_API_KEY` / `OPENAI_IMAGE_MODEL`. Redeploy after adding keys.
+### Chat spend (Claude API key)
+The Review-tab chat (`/api/advisor`) uses only `ANTHROPIC_API_KEY`, with thinking off and at most 1,024 output tokens per reply. One message is roughly 3–5k input tokens (the plan) and 100–300 output tokens — about S$0.01 on Claude Sonnet 5.5. `CHAT_LIMIT_PER_HOUR` (per visitor) and `CHAT_LIMIT_PER_DAY` cap use; they are in-memory per server instance, so they are soft caps. Each reply logs its token use in Vercel → Logs ("advisor usage").
+A Claude.ai Pro/Max subscription does not cover API calls: API keys draw on prepaid credits in the Claude Console. For a hard cap, in the Console use a key from a workspace made for this app, set that workspace's monthly spend limit, and turn off credit auto-reload, so calls stop when the limit or the credits run out.
+
 Backup: run `npm run build` in `site/` and Netlify Drop the `site/dist` folder (no APIs there; the app still runs on fallbacks).

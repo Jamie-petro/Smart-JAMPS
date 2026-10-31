@@ -79,7 +79,7 @@ Same shape as the earlier `proposal.json` (see SCHEMA.md) plus:
 |---|---|---|---|
 | `POST /api/proposal` | P3 | `{ space, draft }` | `{ title, summary, guidelines[], visual_brief, model }` |
 | `POST /api/render` | P4 | `{ prompt, size }` | `{ images: [{src, alt}], model }` |
-| `POST /api/advisor` | P4 | `{ question, history?, plan }` (`planForChat` in `review.ts`) | `{ answer, model }` |
+| `POST /api/advisor` | P4 | `{ question, history?, plan }` (`planForChat` in `review.ts`) | `{ answer, model }`; 429 with the reason when a chat limit is reached |
 | `POST /api/analyze-proposal` | P4 | `{ proposal }` (built by `toAuditRequest` in `review.ts`) | `{ success, analysis, source }`; 502 when Gemini is unavailable |
 
 All endpoints call `site/api/_lib/llm.js`: Claude (`ANTHROPIC_API_KEY`, `LLM_MODEL`) first, then Gemini (`GEMINI_API_KEY`, `GEMINI_TEXT_MODEL`). On failure they return `{ error }` with the reason, and the browser shows it.

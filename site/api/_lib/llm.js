@@ -14,18 +14,22 @@ async function post(url, headers, body) {
   }
 }
 
-async function claude({ system, user, json }) {
+async function claude({ system, user, json, maxTokens, thinkingOff }) {
   if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY not set");
   const model = process.env.LLM_MODEL || "claude-sonnet-5-5";
+  const noThinking = thinkingOff && model === "claude-sonnet-5-5";
   const body = {
     model,
-    // Thinking is on by default on current models and counts toward max_tokens, so leave room.
-    max_tokens: 16000,
+    // Thinking is on by default on current models and counts toward max_tokens, so leave room
+    // unless the caller turns thinking off (short chat answers).
+    max_tokens: noThinking ? maxTokens || 16000 : Math.max(maxTokens || 16000, 4000),
     system: json ? `${system}\nReturn ONLY one JSON object, no prose before or after.` : system,
     messages: [{ role: "user", content: user }],
   };
   const headers = { "x-api-key": process.env.ANTHROPIC_API_KEY, "anthropic-version": "2026-10-21" };
   if (/^claude-(opus|sonnet|haiku|fable)-5/.test(model)) body.output_config = { effort: "low" }; // short answers, fast
+  // Sonnet 5.5 can run without thinking ("between_tools"): cheaper, predictable chat replies.
+  if (noThinking) body.thinking = { type: "between_tools" };
   if (/^claude-(fable-5-1|opus-5-5|opus-5|sonnet-5-5)$/.test(model)) {
     body.fallbacks = "default"; // re-run a safety decline on the recommended model
     headers["anthropic-beta"] = "server-side-fallback-2026-07-01";
@@ -35,7 +39,7 @@ async function claude({ system, user, json }) {
   if (j.stop_reason === "refusal") throw new Error("claude declined this request");
   const text = (j.content || []).filter((c) => c.type === "text").map((c) => c.text).join("").trim();
   if (!text) throw new Error(`claude returned no text (stop_reason ${j.stop_reason})`);
-  return { text, model: j.model || model };
+  return { text, model: j.model || model, usage: j.usage };
 }
 
 async function gemini({ system, user, json }) {
@@ -56,10 +60,10 @@ async function gemini({ system, user, json }) {
   return { text, model };
 }
 
-// Tries each provider in turn. Throws one error listing every failure.
+// Tries each provider in turn (opts.only = "claude" to use Claude alone). Throws one error listing every failure.
 export async function complete(opts) {
   const errors = [];
-  for (const provider of [claude, gemini]) {
+  for (const provider of opts.only === "claude" ? [claude] : [claude, gemini]) {
     try {
       const out = await provider(opts);
       if (opts.json) out.data = parseJSON(out.text);
@@ -82,7 +86,7 @@ export function handler(fn) {
   return async (req, res) => {
     if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
     try {
-      return res.status(200).json(await fn(req.body || {}));
+      return res.status(200).json(await fn(req.body || {}, req));
     } catch (e) {
       return res.status(e.status || 502).json({ error: String(e.message || e) });
     }

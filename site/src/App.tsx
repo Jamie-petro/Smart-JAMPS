@@ -35,6 +35,7 @@ import {
   RefreshCw,
   SlidersHorizontal
 } from 'lucide-react';
+import { printDossier } from './layers/print';
 
 // ============================================================================
 // 1. OPENFREEMAP + MAPLIBRE GL JS + SLA ONEMAP CONFIGURATION
@@ -3507,7 +3508,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                 <div className="flex items-center gap-2">
                   {activeNavMode === 'dossier' && (
                     <button
-                      onClick={() => window.print()}
+                      onClick={() => printDossier(document.getElementById('dossier-print'), currentSite.name)}
                       className="px-3 py-1 rounded bg-amber-500 text-slate-950 font-bold text-xs flex items-center gap-1.5"
                     >
                       <Printer size={13} /> Print / Save PDF
@@ -3522,7 +3523,7 @@ window.dispatchEvent(new CustomEvent('artsToPlaces:externalCommand', {
                 </div>
               </div>
 
-              <div className="flex-1 overflow-y-auto monolith-scroll p-6 space-y-6">
+              <div id="dossier-print" className="flex-1 overflow-y-auto monolith-scroll p-6 space-y-6">
                 {/* Summary Header */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div className="bg-[#121722] border border-[#1e2430] p-3.5 rounded-lg">
