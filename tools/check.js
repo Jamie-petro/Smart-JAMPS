@@ -167,9 +167,15 @@ files.filter((p) => /\.(html|js)$/.test(p) && rel(p).startsWith("site/") && !rel
 // ---------- Keys and honesty ----------
 const KEY_RE = /(sk-ant-[A-Za-z0-9_-]{20,}|sk-(proj-)?[A-Za-z0-9]{20,}|AIza[0-9A-Za-z_-]{30,})/;
 const PROMISE_RE = /\b(you (will|would) be approved|you qualify|you are eligible|guaranteed (approval|funding))\b/i;
+// A local, git-ignored .env is fine (vercel env pull). Only a committed one is an error.
+// Outside a git checkout (e.g. tools/review.js extracts a branch), any .env present was committed.
+let tracked = null;
+try {
+  tracked = new Set(execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).split("\n"));
+} catch {}
 files.filter((p) => /\.(js|json|geojson|html|md|txt|css)$/.test(p) || path.basename(p) === ".env").forEach((p) => {
   const r = rel(p);
-  if (path.basename(p) === ".env") return err(r, ".env must not be in the repo folder you commit — check .gitignore");
+  if (path.basename(p) === ".env") return tracked && !tracked.has(r) ? null : err(r, ".env is committed — remove it (git rm --cached .env) and rotate the keys");
   const t = fs.readFileSync(p, "utf8");
   if (KEY_RE.test(t)) err(r, "looks like an API key — remove it and rotate the key");
   if (r.startsWith("site/") && PROMISE_RE.test(t)) err(r, `promise wording "${t.match(PROMISE_RE)[0]}" — use "appears to meet" / "check with <agency>"`);
