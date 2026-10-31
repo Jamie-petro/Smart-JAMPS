@@ -11,9 +11,10 @@
     });
   }
 
+  // Subtracts weeks from a YYYY-MM-DD date. UTC throughout so the result does not shift a day in SGT.
   function addWeeks(dateStr, weeks) {
-    const d = new Date(dateStr + "T00:00:00");
-    d.setDate(d.getDate() - Math.round(weeks * 7));
+    const d = new Date(dateStr + "T00:00:00Z");
+    d.setUTCDate(d.getUTCDate() - Math.round(weeks * 7));
     return d.toISOString().slice(0, 10);
   }
 

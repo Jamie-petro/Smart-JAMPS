@@ -5,7 +5,7 @@ One app, three layers:
 2. **Proposal** — for the chosen space: proposal, curation/enhancement guidelines, agency workplan, funding shortlist.
 3. **Render** — AI concept image of the proposed event on that site.
 
-Read `WORKFLOW.md` (who does what, when), `AGENTS.md` (rules for AI agents), `CONTRACTS.md` (how layers talk).
+Read `WORKFLOW.md` (who does what, how to vibe-code in this repo), `AGENTS.md` (rules for AI agents), `CONTRACTS.md` (how layers talk).
 
 ## Structure
 ```
@@ -15,15 +15,23 @@ site/                         ← deployed (Vercel Root Directory = site)
   layers/map/                 Layer 1                         P1
     map.js, map.css, data/spaces.geojson
   layers/proposal/            Layer 2                         P3 (logic) + P2 (data/)
-    proposal.js, engine.js, proposal.css
-    data/template.json guidelines.json rules.json grants.json sources.json
+    proposal.js, engine.js, proposal.css                      P3
+    data/template.json                                        P3
+    data/sources.json rules.json grants.json guidelines.json  P2
   layers/render/              Layer 3                         P4
     render.js, render.css
   api/proposal.js             serverless LLM drafting         P3
   api/render.js               serverless image generation     P4
-pipeline/                     offline notes/scripts per owner
+pipeline/                     not deployed: task briefs, notes, prompts, raw outputs
+  spaces/ P1 · sources/ P2 · case/ P3 · render/ P4
+tools/check.js                validator — run before every push   P5
+.github/                      PR template + CI running tools/check.js   P5
 docs/                         pitch, demo script, limitations P5
 ```
+
+## Team
+New here? Read `WORKFLOW.md` → set up, then give your agent your brief in `pipeline/<yours>/README.md`.
+Before every push: `node tools/check.js`.
 
 ## Run locally
 Static only (APIs fall back to template text and a labelled placeholder image):

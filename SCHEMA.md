@@ -1,11 +1,11 @@
 # Layer 2 data contract — files in `site/layers/proposal/data/`
 
-(Paths below say `site/data/`; in this app they live in `site/layers/proposal/data/`. Cross-layer objects are in CONTRACTS.md.)
+Owners: P2 writes `sources.json`, `rules.json`, `grants.json`, `guidelines.json`. P3 writes `template.json` and the engine. Cross-layer objects are in CONTRACTS.md. `node tools/check.js` validates all of these.
 
 
 `status` everywhere ∈ `verified` | `assumption` | `gap`.
 
-## sources.json  (P1, P2 may append grant sources) — official sources register
+## sources.json  (P2) — official sources register
 ```json
 [{
   "id": "src-sla-str",
@@ -20,7 +20,8 @@
 ```
 `type` ∈ `permission`, `licence`, `grant`, `guidance`, `venue`.
 
-## proposal.json  (P3) — the one concrete case
+## template.json  (P3) — the one concrete case
+Layer 2 copies this for the chosen space and fills each component's `location` from the Space, so `location` may be left out of the file.
 ```json
 {
   "id": "case-1",
@@ -49,7 +50,7 @@
 - `component.type` ∈ `performance`, `installation`, `workshop`, `exhibition`, `community_programme`, `food_stall`, `other`
 - `location.land_owner` ∈ `state_land`, `hdb`, `park`, `private`, `public_road`, `unknown`
 
-## rules.json  (P1) — permissions / requirements
+## rules.json  (P2) — permissions / requirements
 ```json
 [{
   "id": "r-land",
@@ -97,6 +98,21 @@
 - `check.field` starting with `applicant.` / `proposal.` is evaluated on the proposal; `component.` is evaluated on each covered component (met if any covered component passes). `check: null` → result `unknown` (needs human judgement).
 - `improvement` must be a **genuine change to the project**, never a re-description of the same activity.
 - Two shortlisted grants with the same `funding_group` trigger an overlap warning.
+
+## guidelines.json  (P2) — curation / enhancement guidelines
+```json
+[{
+  "id": "gl-2",
+  "category": "site_care",
+  "text": "Keep amplified sound away from bedroom-facing blocks and end before late evening.",
+  "why": "Void decks sit under homes; noise complaints can end an event.",
+  "when": {"space.kind": ["void_deck"], "component.amplified_sound": [true]},
+  "source_id": null,
+  "status": "assumption"
+}]
+```
+- `category` ∈ `curation`, `programming`, `community`, `accessibility`, `site_care`, `permissions`, `funding`
+- `when`: keys start with `space.` (a Space field) or `component.` (true if any component matches); all keys must match; `{}` = always shown.
 
 ## Engine outputs (computed in browser, not files)
 - `workplan`: rules that apply, ordered by dependencies then lead time, with `start_by` = event_start − lead_time_weeks, `matched_components`, `status`, `source`.

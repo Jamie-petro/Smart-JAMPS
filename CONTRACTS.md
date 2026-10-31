@@ -14,9 +14,11 @@ App.emit(event, payload)                           // sets App.state[...] and no
 App.on(event, fn)                                  // fn(payload)
 App.state                                          // { space, proposal, render }
 App.goTo(layerId)                                  // switch panel tab: "map" | "proposal" | "render"
-App.demo(name)                                     // Promise<json> from site/layers/<layer>/data/demo-*.json
+App.demo(name)                                     // Promise<json|null>: first site/layers/{map,proposal,render}/data/<name> that exists
 App.api(path, body)                                // POST to /api/<path>; resolves null if no backend (static host) or error
 App.status(text)                                   // short status line in the header
+App.esc(text)                                      // HTML-escape; use for every value you put in innerHTML
+App.badge(status)                                  // <span class="badge …"> for verified / assumption / gap / met / not_met / unknown
 ```
 Events: `space:selected` (Space), `proposal:ready` (Proposal), `render:ready` (Render).
 Selecting a new space clears `proposal` and `render`.
@@ -58,7 +60,8 @@ Same shape as the earlier `proposal.json` (see SCHEMA.md) plus:
   "workplan": [ /* Engine.workplan output */ ],
   "shortlist": [ /* Engine.shortlist output */ ],
   "visual_brief": "One paragraph describing what the event looks like on site — Layer 3 uses this.",
-  "generated_by": "template | llm:<model>"
+  "generated_by": "template | llm:<model>",
+  "gaps": [ /* optional: Engine.gaps output — items still to check */ ]
 }
 ```
 `guidelines[].category` ∈ `curation`, `programming`, `community`, `accessibility`, `site_care`, `permissions`, `funding`
@@ -79,7 +82,7 @@ Same shape as the earlier `proposal.json` (see SCHEMA.md) plus:
 ## Backend endpoints (Vercel serverless, `site/api/`)
 | Path | Owner | Body | Returns |
 |---|---|---|---|
-| `POST /api/proposal` | P3 | `{ space, draft }` | `{ title, summary, guidelines[], visual_brief }` |
+| `POST /api/proposal` | P3 | `{ space, draft }` | `{ title, summary, guidelines[], visual_brief, model }` |
 | `POST /api/render` | P4 | `{ prompt, size }` | `{ images: [{src, alt}], model }` |
 
 Keys only in Vercel env vars. Every layer must still work with demo data when `App.api` returns `null` (e.g. on Netlify Drop or offline).

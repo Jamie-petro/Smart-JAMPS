@@ -18,19 +18,26 @@ One page, three layers:
 - Every layer must work with its demo data when `App.api(...)` returns `null`.
 
 ## Folder ownership — edit ONLY your own
-| Owner | Folder | Notes |
+| Owner | Edits | Task brief |
 |---|---|---|
-| P1 Layer 1 Map | `site/layers/map/` | `map.js`, `map.css`, `data/spaces.geojson` |
-| P2 Layer 2 data | `site/layers/proposal/data/` | `rules.json`, `grants.json`, `sources.json`, `guidelines.json` |
-| P3 Layer 2 logic | `site/layers/proposal/*.js`, `site/api/proposal.js`, `pipeline/case/` | `proposal.js`, `engine.js` |
-| P4 Layer 3 Render | `site/layers/render/`, `site/api/render.js` | |
-| P5 Shell & integration | `site/index.html`, `site/core/`, `docs/`, root `*.md` | merges PRs |
+| P1 Layer 1 Map | `site/layers/map/` (`map.js`, `map.css`, `data/spaces.geojson`), `pipeline/spaces/` | `pipeline/spaces/README.md` |
+| P2 Layer 2 data | `site/layers/proposal/data/` `sources.json`, `rules.json`, `grants.json`, `guidelines.json`; `pipeline/sources/` | `pipeline/sources/README.md` |
+| P3 Layer 2 logic | `site/layers/proposal/*.js`, `*.css`, `data/template.json`; `site/api/proposal.js`; `pipeline/case/` | `pipeline/case/README.md` |
+| P4 Layer 3 Render | `site/layers/render/`, `site/api/render.js`, `pipeline/render/` | `pipeline/render/README.md` |
+| P5 Shell & integration | `site/index.html`, `site/core/`, `docs/`, `tools/`, `.github/`, root `*.md` | `docs/README.md` |
+
+If the task needs a change outside your folder (a new `App` method, a new contract field, someone else's file): **stop and tell the human** what to ask the owner for. Do not make the change.
 
 ## Honesty rules (judging criteria)
 - Every requirement, criterion and guideline has `status` = `verified` (official source opened today, linked) / `assumption` / `gap`.
 - Never say "you will be approved" or "you qualify". Use "appears to meet", "check with <agency>".
 - Renders are labelled "AI-generated concept, not a design or approval".
 - Improvements must be real project changes, never re-labelling an activity.
+
+## Before you say you are done
+1. `node tools/check.js` passes (validates data against these contracts, JS syntax, keys, promise wording).
+2. The page still loads with `python3 -m http.server 8000 -d site` and Map → Proposal → Render works with no console errors.
+3. Tell the human which files you changed and anything you marked `assumption` or `gap`.
 
 ## Git
 - Branch `<person>/<topic>`; `git pull --rebase origin main` before push; push at least every 20 min; PR → P5 merges.
