@@ -10,7 +10,7 @@
   let map, markers = {}, spaces = [], selectedId = null, panel;
 
   function initMap() {
-    map = L.map("map", { minZoom: 11, maxZoom: 19, maxBounds: SG_BOUNDS.pad(0.1) }).setView(SG_CENTER, 12);
+    map = L.map("map", { minZoom: 12, maxZoom: 19, maxBounds: SG_BOUNDS.pad(0.1) }).setView(SG_CENTER, 12);
     // OneMap basemap (SLA). Attribution is required by OneMap's terms.
     const onemap = L.tileLayer("https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png", {
       detectRetina: true, minZoom: 11, maxZoom: 19, bounds: SG_BOUNDS,
@@ -39,7 +39,7 @@
         .addTo(map);
       markers[s.id] = m;
     });
-    if (spaces.length) map.fitBounds(L.latLngBounds(spaces.map((s) => [s.lat, s.lon])).pad(0.3));
+    if (spaces.length) map.fitBounds(L.latLngBounds(spaces.map((s) => [s.lat, s.lon])).pad(0.08));
   }
 
   function select(id) {

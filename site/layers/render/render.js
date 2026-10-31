@@ -23,7 +23,7 @@
   function demoImage(space, p) {
     // Placeholder shown when no backend/key is available. Clearly labelled.
     const E = App.esc;
-    const items = (p.components || []).map((c) => c.label).slice(0, 3);
+    const items = (p.components || []).map((c) => (c.label.length > 22 ? c.label.slice(0, 21) + "…" : c.label)).slice(0, 3);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="640" viewBox="0 0 1024 640">
       <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e1b4b"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
       <rect width="1024" height="640" fill="url(#g)"/>
