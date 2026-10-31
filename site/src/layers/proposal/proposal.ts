@@ -126,3 +126,58 @@ export function mergeAiDraft(p: any, ai: any) {
     generated_by: `llm:${ai.model || '?'}`
   };
 }
+
+// Timeline phases (from the render-layer navigator), keyed by a step's lead time in weeks.
+export const PHASES = [
+  { id: 't12', label: '12+ weeks before' },
+  { id: 't8', label: '8–11 weeks before' },
+  { id: 't4', label: '4–7 weeks before' },
+  { id: 't0', label: 'Under 4 weeks' },
+  { id: 'unknown', label: 'Lead time unknown — ask the agency' }
+];
+export function phaseOf(weeks: number | null | undefined) {
+  if (weeks == null) return 'unknown';
+  return weeks >= 12 ? 't12' : weeks >= 8 ? 't8' : weeks >= 4 ? 't4' : 't0';
+}
+
+// "Download plan": a Markdown file of the plan with statuses and sources (replaces the navigator's submission pack).
+export function downloadPlan(space: Space, p: any) {
+  const src = (s: any) => (s ? `[${s.agency}](${s.url})` : 'no source');
+  const lines = [
+    `# ${p.title}`,
+    '',
+    `${space.name} · ${p.event_start} to ${p.event_end}`,
+    '',
+    p.summary,
+    '',
+    '> Guidance only. Not an approval or a funding decision. Statuses: verified (official source checked) / assumption / gap.',
+    '',
+    '## Activities',
+    ...p.components.map((c: any) => `- ${c.label} — S$${(c.budget_sgd || 0).toLocaleString()}`),
+    '',
+    '## Steps, in order',
+    ...p.workplan.map(
+      (s: any, i: number) =>
+        `${i + 1}. **${s.agency}** — ${s.requirement} _(${s.status})_  \n   Start by ${s.start_by || 'unknown — ask the agency'}. ${s.why} Source: ${src(s.source)}`
+    ),
+    '',
+    '## Funding to look at',
+    ...p.shortlist.map(
+      (g: any) =>
+        `- **${g.name}** (${src(g.source)}) — appears to meet ${g.counts.met}, not met ${g.counts.not_met}, to check ${g.counts.unknown}. Could fund: ${g.linked_components.map((c: any) => c.label).join(', ')}`
+    ),
+    '',
+    '## Ideas to improve it',
+    ...p.guidelines.map((g: any) => `- ${g.text} _(${g.status})_`),
+    '',
+    '## Still to check',
+    ...p.gaps.map((g: any) => `- ${g.label}`),
+    ''
+  ];
+  const url = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/markdown' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `plan-${space.id}.md`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}

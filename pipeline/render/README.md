@@ -9,4 +9,4 @@ Give this file to your agent as the task. You edit `site/src/layers/render/` (`R
 2. (by 13:05) Improve `buildPrompt` in `render.ts`: scale, Singapore context, time of day, the activities, the curation guidelines. Save prompt experiments and good/bad outputs in `pipeline/render/` (images go in `pipeline/render/cache/images/`, which is git-ignored).
 3. (13:10–13:40, optional) Let the user upload a site photo for image-to-image; 2–3 variations; a "prompt used" disclosure under each image.
 
-Must keep working with no backend: `render.ts` then shows a sample AI concept for the site type (`public/navigator/images/`, `is_demo: true`, captioned as not this site). Render object shape is in CONTRACTS.md.
+Must keep working with no backend: `render.ts` then shows a sample AI concept for the site type (`public/layers/render/images/`, `is_demo: true`, captioned as not this site). Render object shape is in CONTRACTS.md.

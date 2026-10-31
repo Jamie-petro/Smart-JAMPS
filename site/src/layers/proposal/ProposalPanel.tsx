@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, emit, useBus } from '../bus';
 import { Badge, Section, SourceLink } from '../ui';
-import { buildProposal, loadData, loadEngine, mergeAiDraft, type Data } from './proposal';
+import { buildProposal, downloadPlan, loadData, loadEngine, mergeAiDraft, PHASES, phaseOf, type Data } from './proposal';
 
 export default function ProposalPanel({ onVisualise }: { onVisualise: () => void }) {
   const { space } = useBus();
@@ -16,6 +16,7 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
   const [ai, setAi] = useState<any>(null);
   const [note, setNote] = useState('');
   const [brief, setBrief] = useState('');
+  const [byTime, setByTime] = useState(false);
 
   useEffect(() => {
     Promise.all([loadData(), loadEngine()])
@@ -65,9 +66,15 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
 
   return (
     <div className="text-xs text-slate-300 leading-relaxed">
-      <h2 className="text-sm font-bold text-white">{p.title}</h2>
+      <div className="flex items-start gap-2">
+        <h2 className="text-sm font-bold text-white flex-1">{p.title}</h2>
+        <button onClick={() => downloadPlan(space, p)} className="px-2 py-1 rounded border border-[#1e2430] text-[11px] text-slate-300 hover:border-amber-500">
+          Download plan
+        </button>
+      </div>
       <p className={muted}>
-        {p.event_start} → {p.event_end}
+        {p.event_start} → {p.event_end} · audience up to {Math.max(0, ...p.components.map((c: any) => c.audience_size || 0))} · budget S$
+        {p.components.reduce((s: number, c: any) => s + (c.budget_sgd || 0), 0).toLocaleString()}
         {p.generated_by !== 'template' ? ` · written by ${p.generated_by}` : ''}
       </p>
       <p className="mt-1 mb-2 line-clamp-3">{p.summary}</p>
@@ -98,7 +105,37 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
       </Section>
 
       <Section open title={`Steps (${p.workplan.length})`}>
-        {p.workplan.length ? (
+        <div className="flex gap-1 mb-1.5 text-[11px]">
+          {['List', 'By time'].map((t, i) => (
+            <button
+              key={t}
+              onClick={() => setByTime(i === 1)}
+              className={`px-2 py-0.5 rounded ${byTime === (i === 1) ? 'bg-[#161c28] text-white' : 'text-slate-400'}`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        {byTime ? (
+          // Timeline view (from the render-layer navigator), grouped by each step's lead time.
+          <ol className="border-l border-[#1e2430] ml-1">
+            {PHASES.map((ph) => {
+              const steps = p.workplan.filter((s: any) => phaseOf(s.lead_time_weeks) === ph.id);
+              return steps.length ? (
+                <li key={ph.id} className="pl-3 mb-2 relative">
+                  <span className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-amber-500" />
+                  <div className="text-[11px] font-semibold text-amber-400">{ph.label}</div>
+                  {steps.map((s: any) => (
+                    <div key={s.id}>
+                      <b className="text-white">{s.agency}</b> — {s.requirement}{' '}
+                      <span className={muted}>{s.start_by ? `by ${s.start_by}` : ''}</span>
+                    </div>
+                  ))}
+                </li>
+              ) : null;
+            })}
+          </ol>
+        ) : p.workplan.length ? (
           p.workplan.map((s: any, i: number) => (
             <details key={s.id} className="mb-1">
               <summary className="cursor-pointer">
@@ -131,6 +168,29 @@ export default function ProposalPanel({ onVisualise }: { onVisualise: () => void
 
       <Section title={`Funding (${p.shortlist.length})`}>
         <p className={muted}>"Appears to meet" is not eligibility. Check with the agency.</p>
+        <table className="w-full my-2 text-[11px]">
+          <thead className="text-slate-500 text-left">
+            <tr>
+              <th className="font-normal">Activity</th>
+              <th className="font-normal text-right pr-2">S$</th>
+              <th className="font-normal">Could be funded by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {p.components.map((c: any) => (
+              <tr key={c.id} className="border-t border-[#1e2430] align-top">
+                <td className="py-0.5">{c.label}</td>
+                <td className="text-right pr-2 font-mono">{(c.budget_sgd || 0).toLocaleString()}</td>
+                <td className="text-slate-400">
+                  {p.shortlist
+                    .filter((g: any) => g.linked_components.some((x: any) => x.id === c.id))
+                    .map((g: any) => g.name)
+                    .join(', ') || '—'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         {p.shortlist.length ? (
           p.shortlist.map((g: any) => (
             <details key={g.id} className="mt-1">

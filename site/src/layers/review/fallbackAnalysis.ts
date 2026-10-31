@@ -1,4 +1,4 @@
-// Rule-based audit used when /api/analyze-proposal (Gemini) is unavailable. Moved from the original server.ts.
+// Rule-based review used when /api/analyze-proposal (Gemini) is unavailable. From the render-layer server.ts. Owner: P4.
 // It is fixed advice, not an AI result; the UI labels it "rule-based fallback".
 export function generateFallbackAnalysis(proposal: any) {
   const isStateLand = proposal.venueTenure === 'state_land_reserve';

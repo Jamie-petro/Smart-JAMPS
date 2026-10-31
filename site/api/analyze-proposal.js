@@ -1,5 +1,5 @@
 // POST /api/analyze-proposal  { proposal } → { success, analysis, source }   Owner: P4
-// Vercel serverless function (ported from the navigator's Express server.ts). Key from Vercel env var GEMINI_API_KEY.
+// Vercel serverless function (ported from the render-layer Express server.ts; used by the dock's Review tab). Key from Vercel env var GEMINI_API_KEY.
 // Returns 502 when Gemini is unavailable; the browser then shows the rule-based fallback, labelled as such.
 export default async (req, res) => {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });

@@ -18,7 +18,7 @@ const OWNS = {
   P1: [/^site\/index\.html$/, /^site\/src\/(App|main)\.tsx$/, /^site\/src\/index\.css$/, /^site\/src\/layers\/space\.ts$/, /^site\/public\/layers\/map\//, /^pipeline\/spaces\//],
   P2: [/^site\/public\/layers\/proposal\/data\/(sources|rules|grants|guidelines)\.json$/, /^pipeline\/sources\//],
   P3: [/^site\/src\/layers\/proposal\//, /^site\/public\/layers\/proposal\/engine\.js$/, /^site\/public\/layers\/proposal\/data\/template\.json$/, /^site\/api\/proposal\.js$/, /^pipeline\/case\//],
-  P4: [/^site\/src\/layers\/render\//, /^site\/src\/navigator\//, /^site\/public\/navigator\//, /^site\/api\/(render|analyze-proposal)\.js$/, /^pipeline\/render\//],
+  P4: [/^site\/src\/layers\/render\//, /^site\/src\/layers\/review\//, /^site\/public\/layers\/render\//, /^site\/api\/(render|analyze-proposal)\.js$/, /^pipeline\/render\//],
   P5: [/^site\/src\/layers\/(bus\.ts|ui\.tsx|LayerDock\.tsx)$/, /^site\/(package(-lock)?\.json|vite\.config\.ts|tsconfig\.json|vercel\.json|metadata\.json)$/, /^docs\//, /^tools\//, /^\.github\//, /^[^/]+\.md$/, /^\.gitignore$/, /^\.env\.example$/],
 };
 const ownerOf = (file) => Object.keys(OWNS).filter((p) => OWNS[p].some((re) => re.test(file)));

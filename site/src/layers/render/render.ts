@@ -18,7 +18,7 @@ export function buildPrompt(space: Space, p: any) {
     .join('\n');
 }
 
-// Demo renders: three AI concept images from the render-layer zip (public/navigator/images/).
+// Demo renders: three AI concept images from the render-layer zip (public/layers/render/images/).
 // Used when /api/render is unavailable. They are samples for the site *type*, not images of this site.
 const SAMPLE_BY_KIND: Record<string, string> = {
   park: 'park_connector_art_1793422638218.jpg',
@@ -27,7 +27,7 @@ const SAMPLE_BY_KIND: Record<string, string> = {
   plaza: 'telok_ayer_artwalk_1793422637749.jpg'
 };
 export function sampleImage(space: Space) {
-  return '/navigator/images/' + (SAMPLE_BY_KIND[space.kind] || 'voiddeck_theatre_1793422637830.jpg');
+  return '/layers/render/images/' + (SAMPLE_BY_KIND[space.kind] || 'voiddeck_theatre_1793422637830.jpg');
 }
 
 // Returns a CONTRACTS.md Render plus a note for the UI.
