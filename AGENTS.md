@@ -12,7 +12,7 @@ One page, three layers:
 13:10 checkpoint (live URL must work) · 13:45 CODE FREEZE · 14:00 final session. `main` must always deploy.
 
 ## Architecture (do not change)
-- `site/` is deployed by Vercel (Root Directory = `site`). Plain HTML + vanilla JS + Leaflet from CDN. **No framework, no bundler, no npm in the browser.**
+- `site/` is deployed by Vercel (Root Directory = `site`). Plain HTML + vanilla JS + MapLibre GL from CDN (3D/2D map). **No framework, no bundler, no npm in the browser.**
 - `site/core/` = shell (P5). Layers live in `site/layers/<id>/` and register with `App.registerLayer`. Layers talk only through `App` events (see `CONTRACTS.md`). Never call another layer's functions or read its DOM.
 - `site/api/*.js` = Vercel serverless functions (CommonJS, Node built-in `fetch`, no dependencies). Keys from `process.env` only.
 - Every layer must work with its demo data when `App.api(...)` returns `null`.

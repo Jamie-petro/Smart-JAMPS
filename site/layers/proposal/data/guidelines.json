@@ -1,83 +1,137 @@
 [
  {
-  "id": "gl-1",
+  "id": "gl-cocreate",
   "category": "community",
-  "text": "SAMPLE: Let workshop participants make part of the installation so residents see their work on site.",
-  "why": "Builds ownership and strengthens community-participation criteria.",
-  "when": {
-   "component.type": [
-    "workshop"
-   ]
-  },
+  "text": "Let workshop participants make pieces that go into the installation, and credit them on site.",
+  "why": "Residents see their own work in public, which builds ownership and brings their families as audience.",
+  "when": {"component.type": ["workshop"]},
   "source_id": null,
   "status": "assumption"
  },
  {
-  "id": "gl-2",
+  "id": "gl-voiddeck-sound",
   "category": "site_care",
-  "text": "SAMPLE: Keep amplified sound away from bedroom-facing blocks and end before late evening.",
-  "why": "Void decks sit under homes; noise complaints can end an event.",
-  "when": {
-   "space.kind": [
-    "void_deck"
-   ],
-   "component.amplified_sound": [
-    true
-   ]
-  },
+  "text": "Keep amplified sound low and pointed away from flats above; end early on weeknights.",
+  "why": "Void decks sit directly under homes; noise complaints are the quickest way to lose the space.",
+  "when": {"space.kind": ["void_deck"], "component.amplified_sound": [true]},
   "source_id": null,
   "status": "assumption"
  },
  {
-  "id": "gl-3",
+  "id": "gl-voiddeck-variety",
+  "category": "permissions",
+  "text": "Plan the performance as a small acoustic set, or move it to the nearby open space: Bishan-Toa Payoh TC does not permit variety shows at void decks.",
+  "why": "The Town Council's booking rates list variety shows as not permitted at void decks but allowed on open spaces.",
+  "when": {"space.kind": ["void_deck"], "component.type": ["performance"]},
+  "source_id": "src-btptc",
+  "status": "verified"
+ },
+ {
+  "id": "gl-exempt-conditions",
+  "category": "site_care",
+  "text": "If relying on a licence exemption, keep to its conditions: start after 11am and end by 10.30pm, use at most 4 loudspeakers angled down towards the audience, and do no set-up or teardown between 11pm and 7am.",
+  "why": "These are the listed conditions for exempt music performances; breaking them means a licence was needed.",
+  "when": {"component.type": ["performance"], "component.amplified_sound": [true]},
+  "source_id": "src-spf-exempt",
+  "status": "verified"
+ },
+ {
+  "id": "gl-access-route",
   "category": "accessibility",
-  "text": "SAMPLE: Keep a step-free route and seating for older residents.",
-  "why": "Many neighbourhood audiences include seniors.",
+  "text": "Keep a step-free route from the nearest lift or bus stop, and put shaded seating near the front for older residents.",
+  "why": "Neighbourhood audiences include many seniors and families with prams.",
   "when": {},
   "source_id": null,
   "status": "assumption"
  },
  {
-  "id": "gl-4",
+  "id": "gl-public-access",
+  "category": "funding",
+  "text": "Keep the site open to everyone during the event — no gated areas or paid zones — if you apply to the Lively Places Fund.",
+  "why": "The fund requires the space to be accessible to the public at all times and does not support commercial events.",
+  "when": {},
+  "source_id": "src-ura-lpf",
+  "status": "verified"
+ },
+ {
+  "id": "gl-night-view",
   "category": "curation",
-  "text": "SAMPLE: Orient the light installation to be seen from the main walkway after dark.",
-  "why": "Passers-by become audience without extra promotion.",
-  "when": {
-   "component.type": [
-    "installation"
-   ],
-   "space.outdoor": [
-    true
-   ]
-  },
+  "text": "Orient the light installation so it reads from the main walkway after dark, and test it at dusk on site.",
+  "why": "Passers-by become the audience without extra promotion; tropical dusk is short, so timing matters.",
+  "when": {"component.type": ["installation"], "space.outdoor": [true]},
   "source_id": null,
   "status": "assumption"
  },
  {
-  "id": "gl-5",
-  "category": "curation",
-  "text": "SAMPLE: Respond to the street's heritage \u2014 use the five-foot way rhythm rather than blocking it.",
-  "why": "Keeps pedestrian flow and fits conservation context.",
-  "when": {
-   "space.kind": [
-    "streetscape",
-    "heritage_building"
-   ]
-  },
+  "id": "gl-rain",
+  "category": "programming",
+  "text": "Have a wet-weather plan: a sheltered fallback spot, covered power points, and a decision time 2 hours before start.",
+  "why": "Evening thunderstorms are common in Singapore; outdoor electrics and audiences need a clear call.",
+  "when": {"space.outdoor": [true]},
   "source_id": null,
   "status": "assumption"
  },
  {
-  "id": "gl-6",
+  "id": "gl-heritage",
+  "category": "curation",
+  "text": "Respond to the street's heritage: keep the five-foot way clear and use the shophouse rhythm (columns, shutters) as the frame rather than covering façades.",
+  "why": "Keeps pedestrian flow and fits the conservation context that gives the place its identity.",
+  "when": {"space.kind": ["streetscape", "heritage_building"]},
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-park-lawn",
+  "category": "site_care",
+  "text": "Use ground protection under stages and keep cables off tree roots; leave the lawn as found.",
+  "why": "Park managers judge applications partly on how the site is protected and restored.",
+  "when": {"space.kind": ["park"], "component.temporary_structure": [true]},
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-nature-permit",
   "category": "permissions",
-  "text": "SAMPLE: Confirm who manages the site before booking performers.",
-  "why": "The land owner gates every other permit.",
-  "when": {
-   "space.land_owner": [
-    "unknown"
-   ]
-  },
+  "text": "If the site is in a nature park or on the Rail Corridor and more than 30 people take part, apply for NParks' group activity permit at least 1 month ahead.",
+  "why": "NParks rejects late applications for organised group activities in those networks.",
+  "when": {"space.kind": ["park", "heritage_building"]},
+  "source_id": "src-nparks-ogap",
+  "status": "verified"
+ },
+ {
+  "id": "gl-owner-first",
+  "category": "permissions",
+  "text": "Confirm who manages the site before booking performers or paying deposits.",
+  "why": "The land owner's consent gates every other permit; this site's owner is not confirmed.",
+  "when": {"space.land_owner": ["unknown"]},
   "source_id": null,
   "status": "gap"
+ },
+ {
+  "id": "gl-languages",
+  "category": "community",
+  "text": "Publicise in the languages used in the block (English, Chinese, Malay, Tamil) through the Residents' Network notice boards.",
+  "why": "Lift-lobby notices reach residents who do not follow social media.",
+  "when": {"space.land_owner": ["hdb"]},
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-food-local",
+  "category": "programming",
+  "text": "Run the drinks stall with a residents' group rather than an outside vendor, and keep cooking off-site.",
+  "why": "Keeps money in the neighbourhood; some Town Councils prohibit cooking at void decks.",
+  "when": {"component.food": [true]},
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-crowd",
+  "category": "site_care",
+  "text": "Mark a clear entry and exit, keep emergency routes free, and brief volunteers on where to send people if it rains.",
+  "why": "Small sites fill fast; simple flow planning avoids crowding at pinch points.",
+  "when": {"component.type": ["performance"]},
+  "source_id": null,
+  "status": "assumption"
  }
 ]

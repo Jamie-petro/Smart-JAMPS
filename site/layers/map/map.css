@@ -6,3 +6,10 @@
 .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
 .space-photo { width: 100%; border-radius: 8px; }
 .space-detail { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin: 8px 0; }
+.map-render { margin: 0; }
+.map-render img { width: 100%; border-radius: 6px; display: block; }
+.map-render figcaption { font-size: 12px; color: #555; margin-top: 4px; }
+.space-marker { width: 18px; height: 18px; padding: 0; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.45); cursor: pointer; }
+.space-marker.sel { width: 26px; height: 26px; border-width: 3px; box-shadow: 0 0 0 4px rgba(124,58,237,.35), 0 1px 4px rgba(0,0,0,.45); }
+.map-mode button { font: 600 13px system-ui, sans-serif; padding: 6px 10px; border: 0; border-radius: 4px; background: #fff; color: #1c1b18; cursor: pointer; }
+.maplibregl-popup-content { padding: 8px; }

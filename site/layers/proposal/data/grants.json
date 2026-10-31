@@ -1,48 +1,80 @@
 [
  {
-  "id": "g-a",
-  "name": "SAMPLE Grant A (community arts)",
-  "agency": "SAMPLE agency",
-  "source_id": "src-oursg",
-  "covers_types": [
-   "performance",
-   "workshop",
-   "installation"
-  ],
-  "max_amount_sgd": null,
-  "funding_group": "gov-arts",
-  "overlap_rule": "SAMPLE: cannot fund an activity already funded by another government grant.",
+  "id": "g-lpf",
+  "name": "Lively Places Fund (URA / HDB)",
+  "agency": "URA",
+  "source_id": "src-ura-lpf",
+  "covers_types": ["installation", "workshop", "community_programme", "performance", "exhibition"],
+  "max_amount_sgd": 5000,
+  "funding_group": "gov",
+  "overlap_rule": "Existing projects which are receiving other forms of funding from other agencies are not eligible for the Fund.",
+  "overlap_status": "verified",
+  "criteria": [
+   {
+    "id": "g-lpf-1",
+    "text": "Applicants sign up as an individual or a team of Singapore Citizens/PRs, at least one above 17",
+    "check": {"field": "applicant.type", "in": ["individual", "informal_group"]},
+    "status": "verified",
+    "improvement": null
+   },
+   {
+    "id": "g-lpf-2",
+    "text": "Not a commercial event",
+    "check": {"field": "component.ticketed", "in": [false]},
+    "status": "verified",
+    "improvement": "Make the event free to attend: drop ticket sales and cover costs with the grant and in-kind support."
+   },
+   {
+    "id": "g-lpf-3",
+    "text": "Involves the community / stakeholders (encouraged)",
+    "check": {"field": "component.community_participation", "in": [true]},
+    "status": "verified",
+    "improvement": "Add a resident co-creation session where neighbours make part of the work shown on site."
+   },
+   {
+    "id": "g-lpf-4",
+    "text": "The space stays accessible to the public at all times",
+    "check": null,
+    "status": "verified",
+    "improvement": null
+   },
+   {
+    "id": "g-lpf-5",
+    "text": "Request fits the cap: up to $5,000 for an activation of 6 months or less ($20,000 if longer); NAC can add artist fees",
+    "check": null,
+    "status": "verified",
+    "improvement": null
+   }
+  ]
+ },
+ {
+  "id": "g-nac-ppg",
+  "name": "Presentation and Participation Grant (NAC)",
+  "agency": "NAC",
+  "source_id": "src-nac-ppg",
+  "covers_types": ["performance", "exhibition", "installation"],
+  "max_amount_sgd": 100000,
+  "funding_group": "gov",
+  "overlap_rule": "Declare other government funding for the same activity; NAC may not fund costs already supported elsewhere.",
   "overlap_status": "assumption",
   "criteria": [
    {
-    "id": "g-a-1",
-    "text": "SAMPLE: Applicant is a registered entity",
-    "check": {
-     "field": "applicant.type",
-     "in": [
-      "registered_society",
-      "company",
-      "charity"
-     ]
-    },
-    "status": "assumption",
-    "improvement": "SAMPLE: Partner with a registered organisation as lead applicant, or register the group."
-   },
-   {
-    "id": "g-a-2",
-    "text": "SAMPLE: Project involves residents in creating the work",
-    "check": {
-     "field": "component.community_participation",
-     "in": [
-      true
-     ]
-    },
+    "id": "g-nac-ppg-1",
+    "text": "Applicant is a Singapore Citizen/PR, a registered organisation, or a collective with a majority of local members",
+    "check": {"field": "applicant.type", "in": ["individual", "informal_group", "registered_society", "company", "charity"]},
     "status": "assumption",
     "improvement": null
    },
    {
-    "id": "g-a-3",
-    "text": "SAMPLE: Benefit to the public is clearly shown",
+    "id": "g-nac-ppg-2",
+    "text": "Shows how audiences or residents take part, not only watch",
+    "check": {"field": "component.community_participation", "in": [true]},
+    "status": "assumption",
+    "improvement": "Have workshop participants make lanterns that become part of the installation, credited on site."
+   },
+   {
+    "id": "g-nac-ppg-3",
+    "text": "Applied within an NAC application cycle, before the project starts",
     "check": null,
     "status": "assumption",
     "improvement": null
@@ -50,29 +82,36 @@
   ]
  },
  {
-  "id": "g-b",
-  "name": "SAMPLE Grant B (placemaking)",
-  "agency": "SAMPLE agency",
-  "source_id": "src-oursg",
-  "covers_types": [
-   "installation"
-  ],
-  "max_amount_sgd": null,
-  "funding_group": "gov-arts",
-  "overlap_rule": "SAMPLE: declare other government funding for the same activity.",
+  "id": "g-wecare",
+  "name": "WeCare Arts Fund (NAC with CDCs)",
+  "agency": "NAC / CDC",
+  "source_id": "src-wecare",
+  "covers_types": ["workshop", "community_programme"],
+  "max_amount_sgd": 5000,
+  "funding_group": "gov",
+  "overlap_rule": "Projects that have already started are not supported; declare other government funding.",
   "overlap_status": "assumption",
   "criteria": [
    {
-    "id": "g-b-1",
-    "text": "SAMPLE: Installation co-created with the community",
-    "check": {
-     "field": "component.community_participation",
-     "in": [
-      true
-     ]
-    },
+    "id": "g-wecare-1",
+    "text": "Project serves beneficiaries of a social service partner (e.g. seniors, persons with disabilities)",
+    "check": null,
     "status": "assumption",
-    "improvement": "SAMPLE: Have workshop participants make part of the installation (a real change, not a re-label)."
+    "improvement": null
+   },
+   {
+    "id": "g-wecare-2",
+    "text": "Participants take part in making art, not only as audience",
+    "check": {"field": "component.community_participation", "in": [true]},
+    "status": "assumption",
+    "improvement": "Run the workshop with a nearby Active Ageing Centre so seniors make work for the event."
+   },
+   {
+    "id": "g-wecare-3",
+    "text": "Project has not started when applying",
+    "check": null,
+    "status": "assumption",
+    "improvement": null
    }
   ]
  }

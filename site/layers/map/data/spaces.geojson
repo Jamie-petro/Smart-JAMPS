@@ -6,21 +6,21 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     103.8474,
-     1.3326
+     103.84885,
+     1.3339
     ]
    },
    "properties": {
     "id": "sp-01",
-    "name": "SAMPLE \u2014 Void deck, Toa Payoh",
+    "name": "Void deck, Blk 177 Toa Payoh Central",
     "kind": "void_deck",
     "land_owner": "hdb",
     "outdoor": false,
-    "area_m2": 300,
+    "area_m2": 250,
     "capacity_est": 80,
     "photo_url": null,
-    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
-    "source": "SAMPLE",
+    "notes": "Sheltered, step-free void deck in the busiest HDB town centre; heavy foot traffic from the bus interchange and hawker centre. Bishan-Toa Payoh Town Council lets residents book void decks and open spaces (variety shows are not permitted at void decks; open spaces are an option).",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026; Bishan-Toa Payoh Town Council booking page (btptc.org.sg)",
     "status": "assumption"
    }
   },
@@ -29,21 +29,21 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     103.859,
-     1.3025
+     103.80114,
+     1.439577
     ]
    },
    "properties": {
     "id": "sp-02",
-    "name": "SAMPLE \u2014 Vacant state land, Kampong Glam edge",
-    "kind": "vacant_land",
-    "land_owner": "state_land",
+    "name": "Community plaza, Kampung Admiralty",
+    "kind": "community_space",
+    "land_owner": "hdb",
     "outdoor": true,
-    "area_m2": 1200,
-    "capacity_est": 300,
+    "area_m2": 600,
+    "capacity_est": 200,
     "photo_url": null,
-    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
-    "source": "SAMPLE",
+    "notes": "Sheltered plaza at an HDB integrated development (homes for seniors, medical centre, hawker centre). Good for intergenerational programmes in Woodlands.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
     "status": "assumption"
    }
   },
@@ -52,22 +52,22 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     103.945,
-     1.354
+     103.9404,
+     1.353133
     ]
    },
    "properties": {
     "id": "sp-03",
-    "name": "SAMPLE \u2014 Neighbourhood park lawn, Tampines",
-    "kind": "park",
-    "land_owner": "park",
+    "name": "Our Tampines Hub — community plaza",
+    "kind": "community_space",
+    "land_owner": "unknown",
     "outdoor": true,
-    "area_m2": 2000,
-    "capacity_est": 400,
+    "area_m2": 800,
+    "capacity_est": 300,
     "photo_url": null,
-    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
-    "source": "SAMPLE",
-    "status": "assumption"
+    "notes": "Large integrated community hub with an outdoor plaza beside the town park. Managing agency for event use not confirmed — check before planning.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "gap"
    }
   },
   {
@@ -75,21 +75,21 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     103.844,
-     1.279
+     103.85897,
+     1.300888
     ]
    },
    "properties": {
     "id": "sp-04",
-    "name": "SAMPLE \u2014 Shophouse five-foot way, Tanjong Pagar",
+    "name": "Haji Lane, Kampong Glam",
     "kind": "streetscape",
     "land_owner": "public_road",
     "outdoor": true,
-    "area_m2": 150,
-    "capacity_est": 40,
+    "area_m2": 600,
+    "capacity_est": 200,
     "photo_url": null,
-    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
-    "source": "SAMPLE",
+    "notes": "Narrow shophouse lane known for murals and independent shops; strong arts identity inside the Kampong Glam conservation area. Any use of the road needs the road authority's agreement.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
     "status": "assumption"
    }
   },
@@ -98,21 +98,182 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
-     103.742,
-     1.333
+     103.86008,
+     1.300915
     ]
    },
    "properties": {
     "id": "sp-05",
-    "name": "SAMPLE \u2014 Civic plaza, Jurong East",
-    "kind": "plaza",
+    "name": "Bussorah Street pedestrian mall, Kampong Glam",
+    "kind": "streetscape",
+    "land_owner": "public_road",
+    "outdoor": true,
+    "area_m2": 900,
+    "capacity_est": 300,
+    "photo_url": null,
+    "notes": "Pedestrianised street framed by conserved shophouses with Sultan Mosque as a backdrop; already used for festive bazaars and street events.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.8477,
+     1.361114
+    ]
+   },
+   "properties": {
+    "id": "sp-06",
+    "name": "Bishan-Ang Mo Kio Park — River Plains",
+    "kind": "park",
+    "land_owner": "park",
+    "outdoor": true,
+    "area_m2": 2000,
+    "capacity_est": 500,
+    "photo_url": null,
+    "notes": "Open lawns along the naturalised Kallang River; a regional park popular with families in the evening.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.90481,
+     1.410997
+    ]
+   },
+   "properties": {
+    "id": "sp-07",
+    "name": "Punggol Waterway Park",
+    "kind": "park",
+    "land_owner": "park",
+    "outdoor": true,
+    "area_m2": 1500,
+    "capacity_est": 400,
+    "photo_url": null,
+    "notes": "Waterfront park at the heart of a young HDB town; boardwalks and lawns suit light installations seen after dark.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.72729,
+     1.339359
+    ]
+   },
+   "properties": {
+    "id": "sp-08",
+    "name": "Jurong Lake Gardens — Passion Wave lawn",
+    "kind": "park",
+    "land_owner": "park",
+    "outdoor": true,
+    "area_m2": 1500,
+    "capacity_est": 400,
+    "photo_url": null,
+    "notes": "National gardens in the west with lakeside lawns; NParks lists a dedicated contact for Jurong Lake Gardens venue enquiries.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.85366,
+     1.289487
+    ]
+   },
+   "properties": {
+    "id": "sp-09",
+    "name": "Esplanade Park",
+    "kind": "park",
+    "land_owner": "park",
+    "outdoor": true,
+    "area_m2": 1200,
+    "capacity_est": 400,
+    "photo_url": null,
+    "notes": "Waterfront park in the Civic District next to the arts centre; high footfall, heritage memorials nearby.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.83793,
+     1.272793
+    ]
+   },
+   "properties": {
+    "id": "sp-10",
+    "name": "Forecourt, former Tanjong Pagar Railway Station",
+    "kind": "heritage_building",
+    "land_owner": "state_land",
+    "outdoor": true,
+    "area_m2": 1000,
+    "capacity_est": 300,
+    "photo_url": null,
+    "notes": "1932 railway station (national monument) at the southern end of the Rail Corridor; dramatic setting for heritage-led arts. Land owner and access conditions to be confirmed.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.8876,
+     1.306875
+    ]
+   },
+   "properties": {
+    "id": "sp-11",
+    "name": "Dakota Crescent (former SIT estate)",
+    "kind": "heritage_building",
     "land_owner": "unknown",
     "outdoor": true,
-    "area_m2": 800,
-    "capacity_est": 250,
+    "area_m2": 1500,
+    "capacity_est": 300,
     "photo_url": null,
-    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
-    "source": "SAMPLE",
+    "notes": "1950s estate with its well-known dove playground; residents moved out and part of the estate is being redeveloped. Current owner and access are unknown — a test of how the tool handles gaps.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
+    "status": "gap"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.9274,
+     1.314379
+    ]
+   },
+   "properties": {
+    "id": "sp-12",
+    "name": "Siglap Linear Park",
+    "kind": "park",
+    "land_owner": "park",
+    "outdoor": true,
+    "area_m2": 800,
+    "capacity_est": 150,
+    "photo_url": null,
+    "notes": "Neighbourhood linear park between landed estates in the east; quiet, suits small acoustic sets and workshops.",
+    "source": "OneMap search (SLA), location checked 31 Oct 2026",
     "status": "assumption"
    }
   }

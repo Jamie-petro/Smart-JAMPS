@@ -23,7 +23,7 @@
   function demoImage(space, p) {
     // Placeholder shown when no backend/key is available. Clearly labelled.
     const E = App.esc;
-    const items = (p.components || []).map((c) => c.label).slice(0, 3);
+    const items = (p.components || []).map((c) => (c.label.length > 22 ? c.label.slice(0, 21) + "…" : c.label)).slice(0, 3);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="640" viewBox="0 0 1024 640">
       <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e1b4b"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs>
       <rect width="1024" height="640" fill="url(#g)"/>
@@ -51,10 +51,26 @@
          <button class="primary" id="rd-go">Generate image</button></p>
       ${note ? `<p class="meta">${E(note)}</p>` : ""}
       <div class="rd-gallery">${gallery
-        .map((r) => r.images.map((im) => `<figure><img src="${im.src}" alt="${E(im.alt)}"><figcaption class="meta">${E(r.model)}${r.is_demo ? " · demo" : ""} · ${E(r.generated_at.slice(11, 16))}</figcaption></figure>`).join(""))
+        .map((r) => r.images.map((im) => `<figure><img src="${E(im.src)}" alt="${E(im.alt)}"><figcaption class="meta">AI-generated concept, not a design or approval · ${E(r.model)}${r.is_demo ? " · demo" : ""} · ${E(r.generated_at.slice(11, 16))}</figcaption></figure>`).join(""))
         .join("")}</div>`;
     panel.querySelector("#rd-go").onclick = generate;
   }
+
+  // Keyless fallback when /api/render is unavailable (static host, local, no keys). Resolves null on failure/timeout.
+  function keylessOnce(prompt, size) {
+    const [w, h] = size.split("x").map((n) => Math.round(+n / 2));
+    const short = prompt.replace(/\s+/g, " ").slice(0, 700);
+    const src = `https://image.pollinations.ai/prompt/${encodeURIComponent(short)}?width=${w}&height=${h}&nologo=true&seed=${Date.now() % 100000}`;
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 45000);
+    // fetch (not <img>) so a rate-limited answer (403 / "Payment-Required" card) counts as a failure.
+    return fetch(src, { signal: ctl.signal })
+      .then((r) => (r.ok && /^image\//.test(r.headers.get("content-type") || "") && !r.headers.get("payment-required") ? r.blob() : null))
+      .then((b) => b && new Promise((res) => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = () => res(null); fr.readAsDataURL(b); }))
+      .catch(() => null)
+      .finally(() => clearTimeout(t));
+  }
+  const keylessImage = keylessOnce;
 
   async function generate() {
     const space = App.state.space, p = App.state.proposal;
@@ -63,21 +79,40 @@
     const btn = panel.querySelector("#rd-go");
     btn.disabled = true;
     btn.textContent = "Generating…";
-    App.status("Generating image…");
-    const res = await App.api("render", { prompt, size });
+    let images = null, model = "demo", note = "";
+    try {
+      App.status("Generating image…");
+      const res = await App.api("render", { prompt, size });
+      if (res?.images?.length) {
+        images = res.images;
+        model = res.model || "?";
+      } else {
+        App.status("Backend unavailable — trying keyless image service…");
+        const src = await keylessImage(prompt, size);
+        if (src) {
+          images = [{ src, alt: `AI concept render of ${p.title}` }];
+          model = "pollinations (keyless fallback)";
+          note = "Image backend not available here — generated with a keyless public service.";
+        }
+      }
+    } catch (e) {
+      console.error("render failed", e);
+    } finally {
+      App.status("");
+    }
+    if (!images) note = "No image service reachable — showing a labelled placeholder.";
     const render = {
       id: "rd-" + Date.now(),
       proposal_id: p.id,
       prompt,
-      images: res?.images?.length ? res.images : [{ src: demoImage(space, p), alt: "Demo placeholder" }],
-      model: res?.model || "demo",
+      images: images || [{ src: demoImage(space, p), alt: "Demo placeholder" }],
+      model,
       generated_at: new Date().toISOString(),
-      is_demo: !res,
+      is_demo: !images,
     };
     gallery.unshift(render);
-    App.status("");
     App.emit("render:ready", render);
-    renderPanel(render.is_demo ? "Backend not available here — showing a labelled placeholder." : "");
+    renderPanel(note);
   }
 
   App.registerLayer({

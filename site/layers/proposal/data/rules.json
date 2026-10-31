@@ -2,109 +2,55 @@
  {
   "id": "r-land",
   "agency": "SLA",
-  "requirement": "SAMPLE: Seek temporary use of the state land site",
+  "requirement": "Apply for a Temporary Occupation Licence (TOL) to use the State land / property",
   "applies_if": {
    "location.land_owner": [
     "state_land"
    ]
   },
-  "lead_time_weeks": 12,
+  "lead_time_weeks": null,
   "depends_on": [],
-  "why": "SAMPLE: The land owner's consent normally gates the other permits.",
-  "source_id": "src-sla",
-  "status": "assumption",
-  "note": ""
+  "why": "SLA rents State land and properties for short-term uses (events up to 90 days) through TOLs; without the land owner's consent the other permits have no venue to attach to.",
+  "source_id": "src-sla-str",
+  "status": "verified",
+  "note": "SLA's page gives no processing time — ask SLA early."
  },
  {
-  "id": "r-hdb",
-  "agency": "HDB / Town Council (verify)",
-  "requirement": "SAMPLE: Book the community space",
+  "id": "r-tc",
+  "agency": "Town Council managing the estate",
+  "requirement": "Get a Town Council permit to use the void deck / open space",
   "applies_if": {
    "location.land_owner": [
     "hdb"
    ]
   },
-  "lead_time_weeks": 4,
+  "lead_time_weeks": null,
   "depends_on": [],
-  "why": "SAMPLE: Space is managed by the estate's managing agency.",
-  "source_id": null,
-  "status": "gap",
-  "note": ""
- },
- {
-  "id": "r-ent",
-  "agency": "Licensing agency (verify)",
-  "requirement": "SAMPLE: Check whether a public/arts entertainment licence is needed",
-  "applies_if": {
-   "type": [
-    "performance"
-   ]
-  },
-  "lead_time_weeks": null,
-  "depends_on": [
-   "r-land"
-  ],
-  "why": "SAMPLE: Public performances may need a licence; the agency usually asks for site consent first.",
-  "source_id": null,
-  "status": "gap",
-  "note": ""
- },
- {
-  "id": "r-struct",
-  "agency": "Building/structure authority (verify)",
-  "requirement": "SAMPLE: Check rules for temporary structures",
-  "applies_if": {
-   "temporary_structure": [
-    true
-   ]
-  },
-  "lead_time_weeks": 6,
-  "depends_on": [
-   "r-land"
-  ],
-  "why": "SAMPLE: Stages and installation frames may need safety approval.",
-  "source_id": null,
+  "why": "Void decks and open spaces in HDB estates are common property managed by the Town Council, which issues the booking permit.",
+  "source_id": "src-btptc",
   "status": "assumption",
-  "note": ""
- },
- {
-  "id": "r-ticket",
-  "agency": "Licensing agency (verify)",
-  "requirement": "SAMPLE: Extra conditions for ticketed events",
-  "applies_if": {
-   "ticketed": [
-    true
-   ]
-  },
-  "lead_time_weeks": null,
-  "depends_on": [
-   "r-ent"
-  ],
-  "why": "SAMPLE: Shows the what-if toggle changing the plan.",
-  "source_id": null,
-  "status": "gap",
-  "note": ""
+  "note": "Checked for Bishan-Toa Payoh TC only (bookings open up to 6 months ahead, residents only, variety shows not permitted at void decks). Other Town Councils differ."
  },
  {
   "id": "r-park",
-  "agency": "Park manager (verify)",
-  "requirement": "SAMPLE: Apply to hold an event in the park",
+  "agency": "NParks",
+  "requirement": "Get NParks approval to use park premises for the event",
   "applies_if": {
    "location.land_owner": [
     "park"
    ]
   },
-  "lead_time_weeks": 8,
+  "lead_time_weeks": null,
   "depends_on": [],
-  "why": "SAMPLE: Park use is managed by the park authority.",
-  "source_id": null,
-  "status": "gap",
-  "note": ""
+  "why": "Parks are managed by NParks; using park premises for an event needs its approval. Nature parks and the Rail Corridor also need a group activity permit (>30 people) at least 1 month ahead.",
+  "source_id": "src-gobiz-nparks",
+  "status": "assumption",
+  "note": "GoBusiness page blocked our tool; group-permit lead time verified on NParks' own page (src-nparks-ogap)."
  },
  {
   "id": "r-road",
-  "agency": "Road/streetscape authority (verify)",
-  "requirement": "SAMPLE: Check use of public walkway / road space",
+  "agency": "LTA / URA (verify)",
+  "requirement": "Confirm who controls the street and how to use road or walkway space",
   "applies_if": {
    "location.land_owner": [
     "public_road"
@@ -112,7 +58,151 @@
   },
   "lead_time_weeks": null,
   "depends_on": [],
-  "why": "SAMPLE: Walkways must stay passable.",
+  "why": "Streets and five-foot ways must stay passable; using them for an event needs the road authority's agreement. We did not find the official page in time.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-owner",
+  "agency": "Land owner (to be identified)",
+  "requirement": "Identify who owns or manages the site before planning anything else",
+  "applies_if": {
+   "location.land_owner": [
+    "unknown"
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [],
+  "why": "Every other permit needs the site owner's consent first; the owner of this site is not confirmed.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-ael",
+  "agency": "IMDA",
+  "requirement": "Check whether the performance is exempt from licensing; if not, apply for an Arts Entertainment Licence",
+  "applies_if": {
+   "type": [
+    "performance"
+   ]
+  },
+  "lead_time_weeks": 9,
+  "depends_on": [
+   "r-land",
+   "r-tc",
+   "r-park",
+   "r-road",
+   "r-owner"
+  ],
+  "why": "Public arts performances need an Arts Entertainment Licence unless they meet an exemption's conditions. IMDA asks for applications at least 40 working days before the event (about 8–9 weeks once public holidays are counted).",
+  "source_id": "src-imda-ael-guide",
+  "status": "verified",
+  "note": "Exemption conditions: see src-spf-exempt. Ordering after venue consent is our assumption."
+ },
+ {
+  "id": "r-police",
+  "agency": "SPF (Neighbourhood Police Centre)",
+  "requirement": "If relying on an exemption that requires it, notify the Police at least 7 days before",
+  "applies_if": {
+   "type": [
+    "performance"
+   ]
+  },
+  "lead_time_weeks": 1,
+  "depends_on": [
+   "r-ael"
+  ],
+  "why": "Some licence-exempt entertainment is exempt only if the organiser notifies the Police at least 7 days ahead and keeps to the listed conditions (hours, loudspeakers, set-up times).",
+  "source_id": "src-spf-exempt",
+  "status": "verified",
+  "note": ""
+ },
+ {
+  "id": "r-struct",
+  "agency": "BCA / SCDF (verify)",
+  "requirement": "Check whether the stage, tent or installation frame needs a temporary-structure or fire-safety approval",
+  "applies_if": {
+   "temporary_structure": [
+    true
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [
+   "r-land",
+   "r-tc",
+   "r-park",
+   "r-road",
+   "r-owner"
+  ],
+  "why": "Temporary structures that the public stands on or under can need structural and fire-safety checks. We did not open the official pages in time.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-food",
+  "agency": "SFA (verify)",
+  "requirement": "Check food licensing for the pop-up stall",
+  "applies_if": {
+   "food": [
+    true
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [
+   "r-land",
+   "r-tc",
+   "r-park",
+   "r-road",
+   "r-owner"
+  ],
+  "why": "Selling or giving out food at a public event usually needs a temporary food licence; some Town Councils also restrict cooking at void decks.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-sound",
+  "agency": "Venue manager",
+  "requirement": "Agree sound levels, speaker placement and finishing time with the venue manager",
+  "applies_if": {
+   "amplified_sound": [
+    true
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [
+   "r-land",
+   "r-tc",
+   "r-park",
+   "r-road",
+   "r-owner"
+  ],
+  "why": "Amplified sound near homes is the most common cause of complaints; exemption conditions also limit loudspeakers and hours.",
+  "source_id": "src-spf-exempt",
+  "status": "assumption",
+  "note": "Venue conditions vary by owner."
+ },
+ {
+  "id": "r-ticket",
+  "agency": "Venue manager",
+  "requirement": "Declare that the event is ticketed and check how fees and conditions change",
+  "applies_if": {
+   "ticketed": [
+    true
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [
+   "r-land",
+   "r-tc",
+   "r-park",
+   "r-road",
+   "r-owner"
+  ],
+  "why": "Charging admission makes the event commercial, which can change venue fees and rules out some funding (e.g. the Lively Places Fund does not support commercial events).",
   "source_id": null,
   "status": "gap",
   "note": ""

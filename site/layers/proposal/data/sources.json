@@ -1,22 +1,122 @@
 [
  {
-  "id": "src-oursg",
-  "agency": "OurSG Grants",
-  "title": "OurSG Grants portal (SAMPLE entry \u2014 P2 to replace with specific grant pages)",
-  "url": "https://www.oursggrants.gov.sg/",
-  "type": "grant",
-  "checked_on": null,
-  "checked_by": null,
-  "summary": "SAMPLE"
+  "id": "src-sla-str",
+  "agency": "SLA",
+  "title": "Short-Term Rental of State land and properties",
+  "url": "https://www.sla.gov.sg/properties/rent-state-land-and-properties/short-term-rental/",
+  "type": "permission",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "State land and properties are rented for short-term uses through Temporary Occupation Licences (TOLs); vacant State properties can be rented for events for not more than 90 days, applied for online. The page does not state a lead time or processing time."
  },
  {
-  "id": "src-sla",
-  "agency": "SLA",
-  "title": "Short-term use of State land/property (SAMPLE entry \u2014 P1 to replace with exact page)",
-  "url": "https://www.sla.gov.sg/",
+  "id": "src-imda-ael",
+  "agency": "IMDA",
+  "title": "Licence for the Provision of Arts Entertainment",
+  "url": "https://imda.gov.sg/regulations-and-licensing-listing/licence-for-the-provision-of-arts-entertainment",
+  "type": "licence",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "IMDA's licence page for arts entertainment (sections: who it is for, exemptions, fees, how to apply). Page body could not be read by our tool; details taken from IMDA's submission guidelines below."
+ },
+ {
+  "id": "src-imda-ael-guide",
+  "agency": "IMDA",
+  "title": "Submission Guidelines for Arts Entertainment Licence Applications (wef 6 Feb 2024)",
+  "url": "https://iris.imda.gov.sg/pdf/Submission-Guidelines-for-Arts-Entertainment-Licence-Applications(wef-6-Feb-2024).pdf",
+  "type": "licence",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Applications should be made at least 40 working days before the event; IMDA processes within 20 working days of complete information. Some arts entertainment is exempt from licensing, subject to conditions."
+ },
+ {
+  "id": "src-spf-exempt",
+  "agency": "SPF / IMDA",
+  "title": "Public Entertainment or Arts Entertainment activities exempted from licence",
+  "url": "https://www.police.gov.sg/-/media/SPF/Images/Licences/01aExempted-Public-Entertainment-or-Arts-Entertainment-Activities.pdf",
+  "type": "licence",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Lists entertainment activities that need no licence if the exemption conditions are met; some exempt activities still require the organiser to notify the Police at least 7 days before. Events that do not meet the conditions must apply for an Arts Entertainment Licence from IMDA."
+ },
+ {
+  "id": "src-btptc",
+  "agency": "Bishan-Toa Payoh Town Council",
+  "title": "Booking rates for void decks and open spaces",
+  "url": "https://btptc.org.sg/OurService/BookingRates",
+  "type": "venue",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Residents of the town can book void decks and open spaces with a Town Council permit, up to 6 months ahead, first come first served. Variety shows are not permitted at void decks but are listed for open spaces; other Town Councils set their own rules."
+ },
+ {
+  "id": "src-nparks-ogap",
+  "agency": "NParks",
+  "title": "Apply for an organised group activity permit",
+  "url": "https://www.nparks.gov.sg/services/apply-organised-group-activity-permit",
   "type": "permission",
-  "checked_on": null,
-  "checked_by": null,
-  "summary": "SAMPLE"
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Group activities of more than 30 people in the nature park networks and Rail Corridor need a permit applied for at least 1 month ahead (2 months for Pulau Ubin); late applications are rejected. It does not cover general events in town or regional parks."
+ },
+ {
+  "id": "src-gobiz-nparks",
+  "agency": "NParks (via GoBusiness)",
+  "title": "Usage of Premises in Parks",
+  "url": "https://www.gobusiness.gov.sg/browse-all-licences/National-Parks-Board-(NPARKS)/Usage-of-Premises-in-Parks",
+  "type": "permission",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Search listing says using park premises for an event needs NParks approval. The page itself returned 403 to our tool, so this is not verified line by line."
+ },
+ {
+  "id": "src-ura-lpf",
+  "agency": "URA",
+  "title": "Lively Places Fund",
+  "url": "https://www.ura.gov.sg/place-management/public-spaces/lively-places-fund/",
+  "type": "grant",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Funds non-commercial projects that activate public spaces: up to $5,000 for activations of 6 months or less, up to $20,000 for longer ones; artist fees can be supported with NAC. Singapore Citizens/PRs apply as individuals or teams; the space must stay publicly accessible; projects already funded by other agencies are not eligible."
+ },
+ {
+  "id": "src-hdb-lpf",
+  "agency": "HDB",
+  "title": "Lively Places Fund and Challenge (HDB estates)",
+  "url": "https://www.hdb.gov.sg/community/getting-involved/lively-places-programme/lively-places-fund-and-challenge",
+  "type": "grant",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "HDB's page for the same programme in HDB towns. Page returned 404 to our tool; search snippets mention a community match, so treat HDB-specific terms as unverified."
+ },
+ {
+  "id": "src-nac-ppg",
+  "agency": "NAC",
+  "title": "Presentation and Participation Grant",
+  "url": "https://www.nac.gov.sg/support/funding-and-schemes/presentation-and-participation-grant",
+  "type": "grant",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "NAC grant for performances, exhibitions and festivals; search snippets of this page cite a cap of $100,000 per applicant per financial year and fixed application cycles. The page returned 404 to our tool, so criteria are assumptions."
+ },
+ {
+  "id": "src-wecare",
+  "agency": "NAC / CDC",
+  "title": "WeCare Arts Fund — overview and guidelines (3 Apr 2023)",
+  "url": "https://www.cdc.gov.sg/files/wecare_arts_fund___overview_and_guidelines__3_april_2023_.pdf",
+  "type": "grant",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Search snippets of this guide mention support of up to $5,000 per project and that projects already started are excluded. The PDF returned 404 to our tool, so all criteria are assumptions."
+ },
+ {
+  "id": "src-oursg",
+  "agency": "OurSG Grants",
+  "title": "OurSG Grants portal",
+  "url": "https://www.oursggrants.gov.sg/",
+  "type": "guidance",
+  "checked_on": "2026-10-31",
+  "checked_by": "team (AI-assisted)",
+  "summary": "Government portal listing arts, community, heritage, youth and sports grants; the place to check current grant cycles."
  }
 ]

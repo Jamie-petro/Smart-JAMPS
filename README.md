@@ -42,5 +42,5 @@ With the serverless APIs: `npm i -g vercel`, then `vercel dev` from the repo roo
 
 ## Deploy
 Vercel → New Project → import repo → Framework **Other** → Root Directory **`site`** → no build command → Deploy.
-Project Settings → Environment Variables: `ANTHROPIC_API_KEY`, `LLM_MODEL`, `IMAGE_PROVIDER` (`openai`|`gemini`), `OPENAI_API_KEY` / `OPENAI_IMAGE_MODEL` or `GEMINI_API_KEY` / `GEMINI_IMAGE_MODEL`. Redeploy after adding keys.
+Project Settings → Environment Variables: `ANTHROPIC_API_KEY`, `LLM_MODEL`, `IMAGE_PROVIDER` (`gemini` = Nano Banana, default | `openai`), `GEMINI_API_KEY` / `GEMINI_IMAGE_MODEL` or `OPENAI_API_KEY` / `OPENAI_IMAGE_MODEL`. Redeploy after adding keys.
 Backup: Netlify Drop the `site/` folder (no APIs there; the app still runs on fallbacks).
