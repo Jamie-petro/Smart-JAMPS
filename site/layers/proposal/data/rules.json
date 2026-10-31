@@ -1,0 +1,120 @@
+[
+ {
+  "id": "r-land",
+  "agency": "SLA",
+  "requirement": "SAMPLE: Seek temporary use of the state land site",
+  "applies_if": {
+   "location.land_owner": [
+    "state_land"
+   ]
+  },
+  "lead_time_weeks": 12,
+  "depends_on": [],
+  "why": "SAMPLE: The land owner's consent normally gates the other permits.",
+  "source_id": "src-sla",
+  "status": "assumption",
+  "note": ""
+ },
+ {
+  "id": "r-hdb",
+  "agency": "HDB / Town Council (verify)",
+  "requirement": "SAMPLE: Book the community space",
+  "applies_if": {
+   "location.land_owner": [
+    "hdb"
+   ]
+  },
+  "lead_time_weeks": 4,
+  "depends_on": [],
+  "why": "SAMPLE: Space is managed by the estate's managing agency.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-ent",
+  "agency": "Licensing agency (verify)",
+  "requirement": "SAMPLE: Check whether a public/arts entertainment licence is needed",
+  "applies_if": {
+   "type": [
+    "performance"
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [
+   "r-land"
+  ],
+  "why": "SAMPLE: Public performances may need a licence; the agency usually asks for site consent first.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-struct",
+  "agency": "Building/structure authority (verify)",
+  "requirement": "SAMPLE: Check rules for temporary structures",
+  "applies_if": {
+   "temporary_structure": [
+    true
+   ]
+  },
+  "lead_time_weeks": 6,
+  "depends_on": [
+   "r-land"
+  ],
+  "why": "SAMPLE: Stages and installation frames may need safety approval.",
+  "source_id": null,
+  "status": "assumption",
+  "note": ""
+ },
+ {
+  "id": "r-ticket",
+  "agency": "Licensing agency (verify)",
+  "requirement": "SAMPLE: Extra conditions for ticketed events",
+  "applies_if": {
+   "ticketed": [
+    true
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [
+   "r-ent"
+  ],
+  "why": "SAMPLE: Shows the what-if toggle changing the plan.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-park",
+  "agency": "Park manager (verify)",
+  "requirement": "SAMPLE: Apply to hold an event in the park",
+  "applies_if": {
+   "location.land_owner": [
+    "park"
+   ]
+  },
+  "lead_time_weeks": 8,
+  "depends_on": [],
+  "why": "SAMPLE: Park use is managed by the park authority.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ },
+ {
+  "id": "r-road",
+  "agency": "Road/streetscape authority (verify)",
+  "requirement": "SAMPLE: Check use of public walkway / road space",
+  "applies_if": {
+   "location.land_owner": [
+    "public_road"
+   ]
+  },
+  "lead_time_weeks": null,
+  "depends_on": [],
+  "why": "SAMPLE: Walkways must stay passable.",
+  "source_id": null,
+  "status": "gap",
+  "note": ""
+ }
+]

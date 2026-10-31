@@ -1,0 +1,55 @@
+{
+ "id": "case-1",
+ "title": "SAMPLE \u2014 Light & Sound at {space}",
+ "applicant": {
+  "name": "SAMPLE Collective",
+  "type": "informal_group",
+  "uen": null,
+  "track_record_years": 1
+ },
+ "summary": "SAMPLE: A two-evening music performance and light installation, with a resident workshop to co-create the installation.",
+ "event_start": "2027-03-13",
+ "event_end": "2027-03-14",
+ "assumptions": [
+  "SAMPLE: audience size is the group's estimate",
+  "SAMPLE: site availability not confirmed"
+ ],
+ "components": [
+  {
+   "id": "c-perf",
+   "label": "Music performance",
+   "type": "performance",
+   "audience_size": 300,
+   "ticketed": false,
+   "amplified_sound": true,
+   "temporary_structure": true,
+   "food": false,
+   "budget_sgd": 12000,
+   "community_participation": false
+  },
+  {
+   "id": "c-inst",
+   "label": "Light installation",
+   "type": "installation",
+   "audience_size": null,
+   "ticketed": false,
+   "amplified_sound": false,
+   "temporary_structure": true,
+   "food": false,
+   "budget_sgd": 8000,
+   "community_participation": false
+  },
+  {
+   "id": "c-work",
+   "label": "Resident co-creation workshop",
+   "type": "workshop",
+   "audience_size": 30,
+   "ticketed": false,
+   "amplified_sound": false,
+   "temporary_structure": false,
+   "food": false,
+   "budget_sgd": 2000,
+   "community_participation": true
+  }
+ ]
+}

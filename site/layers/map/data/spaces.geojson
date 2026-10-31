@@ -1,0 +1,120 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.8474,
+     1.3326
+    ]
+   },
+   "properties": {
+    "id": "sp-01",
+    "name": "SAMPLE \u2014 Void deck, Toa Payoh",
+    "kind": "void_deck",
+    "land_owner": "hdb",
+    "outdoor": false,
+    "area_m2": 300,
+    "capacity_est": 80,
+    "photo_url": null,
+    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
+    "source": "SAMPLE",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.859,
+     1.3025
+    ]
+   },
+   "properties": {
+    "id": "sp-02",
+    "name": "SAMPLE \u2014 Vacant state land, Kampong Glam edge",
+    "kind": "vacant_land",
+    "land_owner": "state_land",
+    "outdoor": true,
+    "area_m2": 1200,
+    "capacity_est": 300,
+    "photo_url": null,
+    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
+    "source": "SAMPLE",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.945,
+     1.354
+    ]
+   },
+   "properties": {
+    "id": "sp-03",
+    "name": "SAMPLE \u2014 Neighbourhood park lawn, Tampines",
+    "kind": "park",
+    "land_owner": "park",
+    "outdoor": true,
+    "area_m2": 2000,
+    "capacity_est": 400,
+    "photo_url": null,
+    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
+    "source": "SAMPLE",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.844,
+     1.279
+    ]
+   },
+   "properties": {
+    "id": "sp-04",
+    "name": "SAMPLE \u2014 Shophouse five-foot way, Tanjong Pagar",
+    "kind": "streetscape",
+    "land_owner": "public_road",
+    "outdoor": true,
+    "area_m2": 150,
+    "capacity_est": 40,
+    "photo_url": null,
+    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
+    "source": "SAMPLE",
+    "status": "assumption"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     103.742,
+     1.333
+    ]
+   },
+   "properties": {
+    "id": "sp-05",
+    "name": "SAMPLE \u2014 Civic plaza, Jurong East",
+    "kind": "plaza",
+    "land_owner": "unknown",
+    "outdoor": true,
+    "area_m2": 800,
+    "capacity_est": 250,
+    "photo_url": null,
+    "notes": "SAMPLE \u2014 replace with a real candidate and why it suits arts use.",
+    "source": "SAMPLE",
+    "status": "assumption"
+   }
+  }
+ ]
+}

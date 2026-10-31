@@ -1,0 +1,83 @@
+[
+ {
+  "id": "gl-1",
+  "category": "community",
+  "text": "SAMPLE: Let workshop participants make part of the installation so residents see their work on site.",
+  "why": "Builds ownership and strengthens community-participation criteria.",
+  "when": {
+   "component.type": [
+    "workshop"
+   ]
+  },
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-2",
+  "category": "site_care",
+  "text": "SAMPLE: Keep amplified sound away from bedroom-facing blocks and end before late evening.",
+  "why": "Void decks sit under homes; noise complaints can end an event.",
+  "when": {
+   "space.kind": [
+    "void_deck"
+   ],
+   "component.amplified_sound": [
+    true
+   ]
+  },
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-3",
+  "category": "accessibility",
+  "text": "SAMPLE: Keep a step-free route and seating for older residents.",
+  "why": "Many neighbourhood audiences include seniors.",
+  "when": {},
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-4",
+  "category": "curation",
+  "text": "SAMPLE: Orient the light installation to be seen from the main walkway after dark.",
+  "why": "Passers-by become audience without extra promotion.",
+  "when": {
+   "component.type": [
+    "installation"
+   ],
+   "space.outdoor": [
+    true
+   ]
+  },
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-5",
+  "category": "curation",
+  "text": "SAMPLE: Respond to the street's heritage \u2014 use the five-foot way rhythm rather than blocking it.",
+  "why": "Keeps pedestrian flow and fits conservation context.",
+  "when": {
+   "space.kind": [
+    "streetscape",
+    "heritage_building"
+   ]
+  },
+  "source_id": null,
+  "status": "assumption"
+ },
+ {
+  "id": "gl-6",
+  "category": "permissions",
+  "text": "SAMPLE: Confirm who manages the site before booking performers.",
+  "why": "The land owner gates every other permit.",
+  "when": {
+   "space.land_owner": [
+    "unknown"
+   ]
+  },
+  "source_id": null,
+  "status": "gap"
+ }
+]

@@ -1,0 +1,22 @@
+[
+ {
+  "id": "src-oursg",
+  "agency": "OurSG Grants",
+  "title": "OurSG Grants portal (SAMPLE entry \u2014 P2 to replace with specific grant pages)",
+  "url": "https://www.oursggrants.gov.sg/",
+  "type": "grant",
+  "checked_on": null,
+  "checked_by": null,
+  "summary": "SAMPLE"
+ },
+ {
+  "id": "src-sla",
+  "agency": "SLA",
+  "title": "Short-term use of State land/property (SAMPLE entry \u2014 P1 to replace with exact page)",
+  "url": "https://www.sla.gov.sg/",
+  "type": "permission",
+  "checked_on": null,
+  "checked_by": null,
+  "summary": "SAMPLE"
+ }
+]

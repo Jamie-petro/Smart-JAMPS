@@ -1,0 +1,8 @@
+.map-search { display: flex; gap: 6px; margin-bottom: 4px; }
+.map-search input { flex: 1; min-width: 0; }
+.space-list { list-style: none; padding: 0; margin: 0; }
+.space-list li { padding: 5px 4px; border-bottom: 1px solid var(--line); cursor: pointer; }
+.space-list li:hover, .space-list li.sel { color: var(--accent); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.space-photo { width: 100%; border-radius: 8px; }
+.space-detail { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin: 8px 0; }

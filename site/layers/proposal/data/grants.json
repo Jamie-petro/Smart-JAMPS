@@ -1,0 +1,79 @@
+[
+ {
+  "id": "g-a",
+  "name": "SAMPLE Grant A (community arts)",
+  "agency": "SAMPLE agency",
+  "source_id": "src-oursg",
+  "covers_types": [
+   "performance",
+   "workshop",
+   "installation"
+  ],
+  "max_amount_sgd": null,
+  "funding_group": "gov-arts",
+  "overlap_rule": "SAMPLE: cannot fund an activity already funded by another government grant.",
+  "overlap_status": "assumption",
+  "criteria": [
+   {
+    "id": "g-a-1",
+    "text": "SAMPLE: Applicant is a registered entity",
+    "check": {
+     "field": "applicant.type",
+     "in": [
+      "registered_society",
+      "company",
+      "charity"
+     ]
+    },
+    "status": "assumption",
+    "improvement": "SAMPLE: Partner with a registered organisation as lead applicant, or register the group."
+   },
+   {
+    "id": "g-a-2",
+    "text": "SAMPLE: Project involves residents in creating the work",
+    "check": {
+     "field": "component.community_participation",
+     "in": [
+      true
+     ]
+    },
+    "status": "assumption",
+    "improvement": null
+   },
+   {
+    "id": "g-a-3",
+    "text": "SAMPLE: Benefit to the public is clearly shown",
+    "check": null,
+    "status": "assumption",
+    "improvement": null
+   }
+  ]
+ },
+ {
+  "id": "g-b",
+  "name": "SAMPLE Grant B (placemaking)",
+  "agency": "SAMPLE agency",
+  "source_id": "src-oursg",
+  "covers_types": [
+   "installation"
+  ],
+  "max_amount_sgd": null,
+  "funding_group": "gov-arts",
+  "overlap_rule": "SAMPLE: declare other government funding for the same activity.",
+  "overlap_status": "assumption",
+  "criteria": [
+   {
+    "id": "g-b-1",
+    "text": "SAMPLE: Installation co-created with the community",
+    "check": {
+     "field": "component.community_participation",
+     "in": [
+      true
+     ]
+    },
+    "status": "assumption",
+    "improvement": "SAMPLE: Have workshop participants make part of the installation (a real change, not a re-label)."
+   }
+  ]
+ }
+]

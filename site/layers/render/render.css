@@ -1,0 +1,4 @@
+#rd-prompt { width: 100%; font-size: 13px; }
+.rd-gallery { display: grid; gap: 10px; }
+.rd-gallery figure { margin: 0; }
+.rd-gallery img { width: 100%; border-radius: 8px; border: 1px solid var(--line); }

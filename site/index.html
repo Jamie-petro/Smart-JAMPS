@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arts to Places</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="core/app.css">
+  <link rel="stylesheet" href="layers/map/map.css">
+  <link rel="stylesheet" href="layers/proposal/proposal.css">
+  <link rel="stylesheet" href="layers/render/render.css">
+</head>
+<body>
+  <header>
+    <h1>Arts Ideas → Places</h1>
+    <nav id="tabs" aria-label="Layers"></nav>
+    <span id="status" class="muted"></span>
+  </header>
+  <p class="disclaimer">Guidance only — no approval or funding is implied. Badges show what is <span class="badge verified">verified</span> from an official source, an <span class="badge assumption">assumption</span>, or a <span class="badge gap">gap</span>.</p>
+  <main>
+    <div id="map"></div>
+    <aside id="panels"></aside>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="core/app.js"></script>
+  <!-- Layers: each registers itself with App.registerLayer -->
+  <script src="layers/map/map.js"></script>
+  <script src="layers/proposal/engine.js"></script>
+  <script src="layers/proposal/proposal.js"></script>
+  <script src="layers/render/render.js"></script>
+  <script>App.start();</script>
+</body>
+</html>
