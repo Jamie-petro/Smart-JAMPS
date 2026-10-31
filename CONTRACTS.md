@@ -79,5 +79,6 @@ Same shape as the earlier `proposal.json` (see SCHEMA.md) plus:
 |---|---|---|---|
 | `POST /api/proposal` | P3 | `{ space, draft }` | `{ title, summary, guidelines[], visual_brief, model }` |
 | `POST /api/render` | P4 | `{ prompt, size }` | `{ images: [{src, alt}], model }` |
+| `POST /api/analyze-proposal` | P4 | `{ proposal }` (navigator `Proposal`) | `{ success, analysis, source }`; 502 when Gemini is unavailable |
 
 Keys only in Vercel env vars. Every layer must still work with demo data when `api(...)` returns `null` (local dev, static host or offline).

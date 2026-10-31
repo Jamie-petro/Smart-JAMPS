@@ -17,10 +17,13 @@ site/                          ← deployed (Vercel Root Directory = site; Vite 
   src/layers/LayerDock.tsx, ui.tsx  dock hosting Layers 2–3 over the twin       P5
   src/layers/proposal/          Layer 2 panel + logic                            P3
   src/layers/render/            Layer 3 panel + logic                            P4
+  src/navigator/                grant & agency navigator (full-screen, from the dock)  P4
+  public/navigator/images/      its sample AI concept renders                    P4
   public/layers/proposal/       engine.js (P3) + data/*.json (P2; template.json P3)
   public/layers/map/data/       spaces.geojson (real candidate spaces, not yet in the twin)  P1
   api/proposal.js               serverless LLM drafting                          P3
   api/render.js                 serverless image generation                      P4
+  api/analyze-proposal.js       serverless Gemini proposal audit (navigator)     P4
 pipeline/                      not deployed: task briefs, notes, prompts, raw outputs
 tools/check.js                 validator — run before every push                 P5
 .github/                       PR template + CI running tools/check.js           P5

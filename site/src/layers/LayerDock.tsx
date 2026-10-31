@@ -6,6 +6,7 @@ import { emit, useBus } from './bus';
 import { toSpace } from './space';
 import ProposalPanel from './proposal/ProposalPanel';
 import RenderPanel from './render/RenderPanel';
+import NavigatorOverlay from '../navigator/NavigatorOverlay';
 
 type Tab = 'proposal' | 'render';
 
@@ -13,6 +14,7 @@ export default function LayerDock() {
   const { space, proposal } = useBus();
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<Tab>('proposal');
+  const [navigator, setNavigator] = useState(false);
   const last = useRef('');
 
   useEffect(() => {
@@ -33,17 +35,25 @@ export default function LayerDock() {
     { id: 'render', label: '3 · Render', ready: !!proposal }
   ];
 
+  // The navigator covers the screen; the dock stays mounted underneath so Layer 2/3 keep their state.
+  const overlay = navigator ? <NavigatorOverlay onClose={() => setNavigator(false)} /> : null;
+
   if (!open)
     return (
+      <>
+      {overlay}
       <button
         onClick={() => setOpen(true)}
         className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 px-4 py-2 rounded-full bg-amber-500 text-slate-950 font-bold text-xs shadow-xl"
       >
         Open Layer 2 · Proposal & Layer 3 · Render{space ? ` — ${space.name}` : ''}
       </button>
+      </>
     );
 
   return (
+    <>
+    {overlay}
     <section className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-[min(760px,94vw)] h-[62vh] bg-[#0e121b]/97 backdrop-blur-md border border-[#1e2430] rounded-xl shadow-2xl flex flex-col">
       <header className="h-10 px-3 border-b border-[#1e2430] flex items-center gap-1 shrink-0">
         {tabs.map((t) => (
@@ -58,6 +68,13 @@ export default function LayerDock() {
             {t.label}
           </button>
         ))}
+        <button
+          onClick={() => setNavigator(true)}
+          className="px-2.5 py-1 rounded text-[11px] font-semibold text-sky-300 hover:bg-[#161c28]"
+          title="Full-screen agency timeline, funding optimiser, AI audit and submission pack"
+        >
+          Grant & agency navigator ↗
+        </button>
         <span className="ml-auto text-[10px] text-slate-500 hidden sm:inline">Guidance only — no approval or funding is implied.</span>
         <button onClick={() => setOpen(false)} className="ml-2 px-2 text-slate-400 hover:text-white" title="Minimise">
           ▾
@@ -73,5 +90,6 @@ export default function LayerDock() {
         </div>
       </div>
     </section>
+    </>
   );
 }
