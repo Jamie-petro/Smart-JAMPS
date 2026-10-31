@@ -109,12 +109,27 @@
     };
   }
 
+  // Show the latest concept render as a popup on the chosen space's marker.
+  function showRender(r) {
+    const s = App.state.space, m = s && markers[s.id], im = r?.images?.[0];
+    if (!m || !im) return;
+    const E = App.esc;
+    m.bindPopup(
+      `<figure class="map-render"><img src="${E(im.src)}" alt="${E(im.alt)}"><figcaption>AI-generated concept, not a design or approval${r.is_demo ? " · placeholder" : ""}</figcaption></figure>`,
+      { maxWidth: 380, minWidth: 300, autoPanPadding: [20, 20] }
+    );
+    map.setView([s.lat, s.lon], Math.max(map.getZoom(), 15), { animate: false });
+    m.openPopup();
+  }
+
   App.registerLayer({
     id: "map",
     title: "Spaces",
     async mount(el) {
       panel = el;
       initMap();
+      App.on("render:ready", showRender);
+      App.on("space:selected", () => Object.values(markers).forEach((m) => m.unbindPopup()));
       renderPanel();
       try {
         const r = await fetch("layers/map/data/spaces.geojson", { cache: "no-store" });
