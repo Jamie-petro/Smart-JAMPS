@@ -2,7 +2,7 @@
 // Reads only the bus and the twin's public "artsToPlaces:stateChange" event.
 import { useEffect, useMemo, useState } from 'react';
 import { useBus, type Space } from '../layers/bus';
-import { demoImage } from '../layers/render/render';
+import { sampleImage } from '../layers/render/render';
 import type { BudgetLineItem, Proposal } from './types/placemaking';
 
 const TENURE: Record<string, Proposal['venueTenure']> = {
@@ -69,8 +69,8 @@ export function toNavigatorProposal(space: Space, p: any, renderSrc: string | nu
     objectives: (p?.guidelines || []).slice(0, 3).map((g: any) => g.text),
     communityInvolvementPlan: comps.filter((c) => c.community_participation).map((c) => c.label).join('; ') || 'To be defined.',
     safetyPlan: 'To be defined with the venue manager.',
-    // Latest Layer 3 render if there is one, else Layer 3's labelled placeholder (not another site's photo).
-    imagePath: renderSrc || demoImage(space, p || { components: [] })
+    // Latest Layer 3 render if there is one, else the sample concept for this type of site.
+    imagePath: renderSrc || sampleImage(space)
   };
 }
 

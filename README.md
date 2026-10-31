@@ -38,7 +38,7 @@ Before every push: `node tools/check.js`.
 ```bash
 cd site && npm install && npm run dev
 ```
-Open http://localhost:3000. The APIs fall back to template text and a labelled placeholder image. With the serverless APIs: `npm i -g vercel`, then `vercel dev` (link to the project; env vars pulled from Vercel).
+Open http://localhost:3000. The APIs fall back to template text and sample AI concept images (labelled as samples, not the selected site). With the serverless APIs: `npm i -g vercel`, then `vercel dev` (link to the project; env vars pulled from Vercel).
 
 ## Deploy
 Vercel → New Project → import repo → Root Directory **`site`** → Deploy. `site/vercel.json` sets the build (`npm run build` → `dist`), so the Framework setting can stay **Other**.
